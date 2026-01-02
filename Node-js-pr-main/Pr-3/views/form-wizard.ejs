@@ -12,7 +12,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <title>Matrix Template - The Ultimate Multipurpose admin template</title>
     <!-- Custom CSS -->
-    <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet">
+    <link href="assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet">
+    <link href="assets/libs/jquery-steps/steps.css" rel="stylesheet">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -221,31 +222,31 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
+          <aside class="left-sidebar" data-sidebarbg="skin5">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/index" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/chart" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/widgets" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Widgets</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/tables" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Tables</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">Full Width</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/grid" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">Full Width</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Forms </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="form-basic.html" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Form Basic </span></a></li>
-                                <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Form Wizard </span></a></li>
+                                <li class="sidebar-item"><a href="/form-basic" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Form Basic </span></a></li>
+                                <li class="sidebar-item"><a href="/form-wizard" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Form Wizard </span></a></li>
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/buttons" aria-expanded="false"><i class="mdi mdi-relative-scale"></i><span class="hide-menu">Buttons</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Icons </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="icon-material.html" class="sidebar-link"><i class="mdi mdi-emoticon"></i><span class="hide-menu"> Material Icons </span></a></li>
-                                <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> Font Awesome Icons </span></a></li>
+                                <li class="sidebar-item"><a href="/icon-material" class="sidebar-link"><i class="mdi mdi-emoticon"></i><span class="hide-menu"> Material Icons </span></a></li>
+                                <li class="sidebar-item"><a href="/icon-fontawesome" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> Font Awesome Icons </span></a></li>
                             </ul>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-elements.html" aria-expanded="false"><i class="mdi mdi-pencil"></i><span class="hide-menu">Elements</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/pages-elements" aria-expanded="false"><i class="mdi mdi-pencil"></i><span class="hide-menu">Elements</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-move-resize-variant"></i><span class="hide-menu">Addons </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="index2.html" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu"> Dashboard-2 </span></a></li>
@@ -286,7 +287,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Charts</h4>
+                        <h4 class="page-title">Form Wizard</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -308,137 +309,51 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Chart-1 -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Real Time Chart</h5>
-                                 <div id="real-time" style="height:400px;"></div>
-                                <p>Time between updates:
-                                    <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds
-                                </p>
+                <div class="card">
+                    <div class="card-body wizard-content">
+                        <h4 class="card-title">Basic Form Example</h4>
+                        <h6 class="card-subtitle"></h6>
+                        <form id="example-form" action="#" class="m-t-40">
+                            <div>
+                                <h3>Account</h3>
+                                <section>
+                                    <label for="userName">User name *</label>
+                                    <input id="userName" name="userName" type="text" class="required form-control">
+                                    <label for="password">Password *</label>
+                                    <input id="password" name="password" type="text" class="required form-control">
+                                    <label for="confirm">Confirm Password *</label>
+                                    <input id="confirm" name="confirm" type="text" class="required form-control">
+                                    <p>(*) Mandatory</p>
+                                </section>
+                                <h3>Profile</h3>
+                                <section>
+                                    <label for="name">First name *</label>
+                                    <input id="name" name="name" type="text" class="required form-control">
+                                    <label for="surname">Last name *</label>
+                                    <input id="surname" name="surname" type="text" class="required form-control">
+                                    <label for="email">Email *</label>
+                                    <input id="email" name="email" type="text" class="required email form-control">
+                                    <label for="address">Address</label>
+                                    <input id="address" name="address" type="text" class=" form-control">
+                                    <p>(*) Mandatory</p>
+                                </section>
+                                <h3>Hints</h3>
+                                <section>
+                                    <ul>
+                                        <li>Foo</li>
+                                        <li>Bar</li>
+                                        <li>Foobar</li>
+                                    </ul>
+                                </section>
+                                <h3>Finish</h3>
+                                <section>
+                                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                </section>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <!-- ENd chart-1 -->
-                <!-- Chart-2 -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Turning-series chart</h5>
-                                <div id="placeholder" style="height: 400px;"></div>
-                                <p id="choices" class="m-t-20"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Chart-2 -->
-                <!-- Cards -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_line_neutral left text-center m-t-10"><span><span style="display: none;">10,15,8,14,13,10,10</span>
-                                        <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>10%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">150</h3>
-                                    <span class="text-muted">New Users</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_bar_bad left text-center m-t-10"><span><span style="display: none;">3,5,6,16,8,10,6</span>
-                                        <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>-40%</h6></div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">4560</h3>
-                                    <span class="text-muted">Orders</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_line_good left text-center m-t-10"><span><span style="display: none;">12,6,9,23,14,10,17</span>
-                                        <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>+60%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 ">5672</h3>
-                                    <span class="text-muted">Active Users</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_bar_good left text-center m-t-10"><span>12,6,9,23,14,10,13</span>
-                                        <h6>+30%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">2560</h3>
-                                    <span class="text-muted">Register</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End cards -->
-                <!-- Chart-3 -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Bar Chart</h5>
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End chart-3 -->
-                <!-- Charts -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Pie Chart</h5>
-                                <div class="pie" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Line Chart</h5>
-                                <div class="bars" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Charts -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -487,19 +402,38 @@
     <!--Custom JavaScript -->
     <script src="dist/js/custom.min.js"></script>
     <!-- this page js -->
-    <script src="assets/libs/chart/matrix.interface.js"></script>
-    <script src="assets/libs/chart/excanvas.min.js"></script>
-    <script src="assets/libs/flot/jquery.flot.js"></script>
-    <script src="assets/libs/flot/jquery.flot.pie.js"></script>
-    <script src="assets/libs/flot/jquery.flot.time.js"></script>
-    <script src="assets/libs/flot/jquery.flot.stack.js"></script>
-    <script src="assets/libs/flot/jquery.flot.crosshair.js"></script>
-    <script src="assets/libs/chart/jquery.peity.min.js"></script>
-    <script src="assets/libs/chart/matrix.charts.js"></script>
-    <script src="assets/libs/chart/jquery.flot.pie.min.js"></script>
-    <script src="assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-    <script src="assets/libs/chart/turning-series.js"></script>
-    <script src="dist/js/pages/chart/chart-page-init.js"></script>
+    <script src="assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script>
+        // Basic Example with form
+    var form = $("#example-form");
+    form.validate({
+        errorPlacement: function errorPlacement(error, element) { element.before(error); },
+        rules: {
+            confirm: {
+                equalTo: "#password"
+            }
+        }
+    });
+     form.children("div").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        onStepChanging: function(event, currentIndex, newIndex) {
+            form.validate().settings.ignore = ":disabled,:hidden";
+            return form.valid();
+        },
+        onFinishing: function(event, currentIndex) {
+            form.validate().settings.ignore = ":disabled";
+            return form.valid();
+        },
+        onFinished: function(event, currentIndex) {
+            alert("Submitted!");
+        }
+    });
+
+
+    </script>
 </body>
 
 </html>

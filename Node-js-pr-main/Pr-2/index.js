@@ -5,8 +5,7 @@ const PORT = 8081;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// 🔹 Generate 5-character unique ID
+ 
 function generateId() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = '';
@@ -28,13 +27,11 @@ let todos = [
     createdAt: new Date().toLocaleString()
   }
 ];
-
-// Home
+ 
 app.get('/', (req, res) => {
   res.render('index', { todos });
 });
-
-// Add Todo
+ 
 app.post('/add-todo', (req, res) => {
   const newTodo = {
     id: generateId(),
@@ -50,20 +47,17 @@ app.post('/add-todo', (req, res) => {
   todos.push(newTodo);
   res.redirect('/');
 });
-
-// Delete
+ 
 app.get('/delete-todo/:id', (req, res) => {
   todos = todos.filter(todo => todo.id !== req.params.id);
   res.redirect('/');
 });
-
-// Edit page
+ 
 app.get('/edit-todo/:id', (req, res) => {
   const todo = todos.find(todo => todo.id === req.params.id);
   res.render('edit-todo', { todo });
 });
-
-// Update
+ 
 app.post('/update-todo/:id', (req, res) => {
   todos = todos.map(todo =>
     todo.id === req.params.id
