@@ -12,6 +12,16 @@ const bookSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true
+  },
+  genre: {
+    type: String,
+    required: true
+  },
+  publishedYear: {
+    type: Number,
+    required: true,
+    min: 1000,
+    max: new Date().getFullYear()
   }
 });
 
