@@ -1,218 +1,308 @@
+/* Modern Book Store CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
-  padding: 20px;
-  margin: 0;
-  color: #333;
+  padding: 30px;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
+/* Header */
 h1 {
   text-align: center;
-  color: white;
+  color: #2d3748;
+  margin-bottom: 40px;
   font-size: 2.8rem;
-  margin-bottom: 40px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.form-container {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  margin-bottom: 40px;
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  border-radius: 2px;
 }
 
-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
+h2 {
+  color: #4a5568;
+  margin-bottom: 30px;
+  font-size: 2rem;
   font-weight: 600;
+}
+
+/* Form Container */
+.form-container {
+  background: #f7fafc;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
   margin-bottom: 8px;
-  color: #555;
+  color: #4a5568;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-input {
-  padding: 12px 15px;
-  border: 2px solid #ddd;
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
 }
 
-input:focus {
-  border-color: #667eea;
+.input-group input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-button, .btn-update {
-  grid-column: span 2;
-  padding: 15px;
+/* Submit Button */
+button[type="submit"] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
+  padding: 14px 40px;
+  font-size: 1rem;
   font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 30px auto 0;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-button:hover, .btn-update:hover {
+button[type="submit"]:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-.form-actions {
-  grid-column: span 2;
-  display: flex;
-  gap: 15px;
+/* Edit Page Specific */
+.btn-update {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.btn-update:hover {
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
 }
 
 .btn-cancel {
-  grid-column: span 1;
-  padding: 15px;
-  background: #6c757d;
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-  text-align: center;
   text-decoration: none;
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-weight: 600;
   display: inline-block;
-  flex: 1;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
 }
 
 .btn-cancel:hover {
-  background: #5a6268;
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
 }
 
+.form-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+/* Divider */
 hr {
   border: none;
   height: 2px;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent);
-  margin: 40px 0;
+  background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+  margin: 50px 0;
 }
 
-.books-container {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.books-container h2 {
-  color: #667eea;
-  margin-bottom: 25px;
-  text-align: center;
-}
-
+/* Book Grid */
 .book-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 25px;
+  margin-top: 30px;
 }
 
+/* Book Card */
 .book-card {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  border-left: 5px solid #667eea;
-  transition: transform 0.3s;
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
 }
 
 .book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.book-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-card:hover::before {
+  opacity: 1;
 }
 
 .book-title {
-  font-size: 1.3rem;
-  color: #2d3748;
-  margin-bottom: 10px;
+  font-size: 1.4rem;
   font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f7fafc;
+  line-height: 1.4;
 }
 
 .book-details {
-  color: #4a5568;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  color: #718096;
   font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.book-details strong {
+  color: #4a5568;
+  font-weight: 600;
 }
 
 .book-price {
-  font-weight: bold;
-  color: #667eea;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #48bb78;
+  margin: 20px 0;
+  padding-top: 15px;
+  border-top: 2px solid #f7fafc;
+}
+
+.book-price::before {
+  content: '₹';
   font-size: 1.2rem;
-  margin: 10px 0 15px 0;
+  margin-right: 2px;
 }
 
 .book-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #e2e8f0;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f7fafc;
 }
 
 .btn-edit, .btn-delete {
-  padding: 8px 15px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
+  flex: 1;
+  padding: 12px;
+  text-align: center;
   text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: all 0.3s;
-  flex: 1;
   justify-content: center;
+  gap: 8px;
 }
 
 .btn-edit {
-  background: #28a745;
+  background: #4299e1;
+  color: white;
+}
+
+.btn-delete {
+  background: #f56565;
   color: white;
 }
 
 .btn-edit:hover {
-  background: #218838;
-}
-
-.btn-delete {
-  background: #dc3545;
-  color: white;
+  background: #3182ce;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 153, 225, 0.3);
 }
 
 .btn-delete:hover {
-  background: #c82333;
+  background: #e53e3e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 101, 101, 0.3);
 }
 
 .no-books {
   text-align: center;
-  color: #718096;
-  font-style: italic;
-  grid-column: span 3;
-  padding: 40px;
+  padding: 60px 40px;
+  color: #a0aec0;
   font-size: 1.1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px dashed #cbd5e0;
+  margin: 40px auto;
+  max-width: 600px;
+}
+
+.no-books::before {
+  content: '';
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 15px;
+  opacity: 0.7;
+}
+ 
+
+ 
+input:focus {
+  outline: none;
+  border-color: #667eea;
 }

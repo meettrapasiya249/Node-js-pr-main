@@ -1,23 +1,25 @@
-const express = require("express");
-const mongoose = require("mongoose");
 
-const app = express();
+   const express = require("express");
+    const mongoose = require("mongoose");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
+    const app = express();
 
-app.set("view engine", "ejs");
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(express.static("public"));
 
-mongoose.connect(
-  "mongodb+srv://meet:meet%401232@cluster0.aipj3q6.mongodb.net/books"
-)
-.then(() => console.log("MongoDB Atlas CONNECTED"))
-.catch(err => console.log("Mongo ERROR:", err.message));
+    app.set("view engine", "ejs");
 
-const bookRoutes = require("./routes/bookRoutes");
-app.use("/", bookRoutes);
+    mongoose.connect(
+      "mongodb+srv://meet:meet%401232@cluster0.aipj3q6.mongodb.net/books"
+    )
+    .then(() => console.log("MongoDB Atlas CONNECTED"))
+    .catch(err => console.log("Mongo ERROR:", err.message));
 
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
-});
+    const bookRoutes = require("./routes/bookRoutes");
+    app.use("/", bookRoutes);
+
+    app.listen(3000, () => {
+      console.log("Server running at http://localhost:3000"); 
+    });
+ 

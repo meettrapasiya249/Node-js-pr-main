@@ -7,44 +7,35 @@
 </head>
 <body>
   <div class="container">
-    <h1> Book Store</h1>
-    
+    <h1> Book Store</h1> 
     <div class="form-container">
       <form action="/add" method="POST">
         <div class="input-group">
           <label>Book Title</label>
           <input type="text" name="title" placeholder="Enter book title" required />
-        </div>
-        
+        </div> 
         <div class="input-group">
           <label>Author</label>
           <input type="text" name="author" placeholder="Enter author name" required />
-        </div>
-        
+        </div> 
         <div class="input-group">
           <label>Price (₹)</label>
           <input type="number" name="price" placeholder="Enter price" required />
-        </div>
-        
+        </div> 
         <div class="input-group">
           <label>Genre</label>
           <input type="text" name="genre" placeholder="e.g., Fiction, Science, History" required />
-        </div>
-        
+        </div> 
         <div class="input-group">
           <label>Published Year</label>
           <input type="number" name="publishedYear" placeholder="e.g., 2023" required />
-        </div>
-        
+        </div> 
         <button type="submit">  Add Book</button>
       </form>
-    </div>
-
-    <hr>
-
+    </div> 
+    <hr> 
     <div class="books-container">
-      <h2>  Book Collection</h2>
-      
+      <h2>  Book Collection</h2> 
       <% if (books.length > 0) { %>
         <div class="book-list">
           <% books.forEach(book => { %>
@@ -53,8 +44,7 @@
               <div class="book-details"><strong>Author:</strong> <%= book.author %></div>
               <div class="book-details"><strong>Genre:</strong> <%= book.genre %></div>
               <div class="book-details"><strong>Published:</strong> <%= book.publishedYear %></div>
-              <div class="book-price">₹<%= book.price %></div>
-              
+              <div class="book-price">₹<%= book.price %></div> 
               <div class="book-actions">
                 <a href="/edit/<%= book._id %>" class="btn-edit">
                   <i class="fas fa-edit"></i> Edit
