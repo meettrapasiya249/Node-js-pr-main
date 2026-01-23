@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      min-height: 100vh;
+      padding: 30px;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    textarea {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      grid-column: 1 / -1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #6366f1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f8fafc;
+    }
+
+    .danger {
+      color: #dc2626;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <h1>📋 Todo Manager</h1>
+ 
+  <form action="/add-todo" method="post">
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="date" name="date" required>
+    <input type="time" name="time">
+
+    <select name="priority">
+      <option value="Low">Low Priority</option>
+      <option value="Medium">Medium Priority</option>
+      <option value="High">High Priority</option>
+    </select>
+
+    <select name="status">
+      <option value="Pending">Pending</option>
+      <option value="Completed">Completed</option>
+    </select>
+
+    <textarea name="description" rows="2" placeholder="Description"></textarea>
+
+    <button type="submit">Add Todo</button>
+  </form>
+ 
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th colspan="2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% todos.forEach(todo => { %>
+        <tr>
+          <td><%= todo.id %></td>
+          <td><%= todo.title %></td>
+          <td><%= todo.date %></td>
+          <td><%= todo.time %></td>
+          <td><%= todo.priority %></td>
+          <td><%= todo.status %></td>
+          <td><%= todo.createdAt %></td>
+          <td><a href="/edit-todo/<%= todo.id %>">Edit</a></td>
+          <td><a class="danger" href="/delete-todo/<%= todo.id %>">Delete</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
