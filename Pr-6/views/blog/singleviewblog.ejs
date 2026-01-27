@@ -1,0 +1,85 @@
+<%- include('../header')%>
+
+
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Blog</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/blog/view-blog">Blog</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">View Blog</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row align-items">
+               
+ <div class="col-6 text-center ">
+                <img  src="<%=blog.authorImage%>" alt="Title" height="600px" width="500px"  />
+                
+                
+             </div>
+
+             <div class="col-6">
+                    <h4 class="card-title text-center"><%=blog.title%></h4>
+                    <p class="card-text"><strong>Author</strong> : <%=blog.name%></p>
+                    <p class="card-text">Category : <%=blog.category%></p>
+                    <p class="card-text">Status : <%=blog.status%></p>
+                    <p class="card-text">Date : <%=blog.date%></p>
+                    <p class="card-text">Content : <%= blog.content %>
+                    
+                   
+                    </p>
+
+                    <a href="/blog/edit-blog/<%=blog.id%>" class="btn btn-outline-warning">Edit Blog</a>
+                    <a href="/blog/delete-blog/<%=blog.id%>" class="btn btn-outline-danger">Delete Dlog</a>
+             </div>
+            
+             
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+       
+
+    </div>
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+    
+        <%- include('../footer')%>
+    
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
