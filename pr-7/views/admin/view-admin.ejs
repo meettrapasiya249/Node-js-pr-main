@@ -1,0 +1,195 @@
+    <%- include('../header') %>
+
+    <style>
+    .page-breadcrumb {
+        background: #f8f9fa;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .page-title {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-left: 20px;
+    }
+
+    .card {
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background-color: #f8f9fa;
+        color: #2c3e50;
+        font-weight: 600;
+        border: none;
+        padding: 1rem;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        padding: 1rem;
+        border-color: #e9ecef;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+    }
+
+    .btn {
+        border-radius: 4px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn-sm {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .add-btn-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #6c757d;
+    }
+
+    .no-data i {
+        font-size: 3rem;
+        color: #e9ecef;
+        margin-bottom: 1rem;
+    }
+
+    </style> 
+            <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">View Admins</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">View Admins</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="add-btn-container">
+                        <a href="/admin/add-admin" class="btn btn-primary">
+                            <i class="mdi mdi-plus"></i> Add New Admin
+                        </a>
+                    </div> 
+                    <div class="card">
+                        <% if (admins && Array.isArray(admins) && admins.length > 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Profile</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Gender</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% admins.forEach((admin, index) => { %>
+                                            <tr>
+                                                <td><%= index + 1 %></td>
+                                                <td>
+                                                    <% if (admin.profileImg) { %>
+                                                        <img src="/uploads/<%= admin.profileImg %>" alt="<%= admin.adminName %>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                                                    <% } else { %>
+                                                        <span class="badge badge-secondary">No Image</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <strong><%= admin.adminName %></strong>
+                                                </td> 
+                                                <td>
+                                                    <small><%= admin.email %></small>
+                                                </td>
+                                                <td>
+                                                    <small><%= admin.mobile %></small>
+                                                </td>
+                                                <td>
+                                                    <% if (admin.gender === 'Male') { %>
+                                                        <span class="badge badge-primary"><i class="mdi mdi-human-male"></i> <%= admin.gender %></span>
+                                                    <% } else if (admin.gender === 'Female') { %>
+                                                        <span class="badge badge-danger"><i class="mdi mdi-human-female"></i> <%= admin.gender %></span>
+                                                    <% } else { %>
+                                                        <span class="badge badge-info"><%= admin.gender %></span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <small><%= admin.date %></small>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/edit-profile/<%= admin._id %>" class="btn btn-sm btn-info">
+                                                        <i class="mdi mdi-pencil"></i> Edit
+                                                    </a>
+                                                    <a href="/admin/delete-admin/<%= admin._id %>" class="btn btn-sm btn-danger">
+                                                        <i class="mdi mdi-delete"></i> Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <div class="no-data">
+                                <i class="mdi mdi-account-alert"></i>
+                                <h5>No Admins Found</h5>
+                                <p>Start by adding a new admin.</p>
+                                <a href="/admin/add-admin" class="btn btn-primary mt-3">Add Admin</a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <%- include('../footer') %>

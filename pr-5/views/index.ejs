@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-container">
+    <div class="nav-left">
+      <a href="/add" class="add-btn-header">➕ Add Movie</a>
+    </div>
+    <div class="nav-center">
+      <ul class="category-list">
+        <li><a href="/" class="<%= genre === 'All' ? 'active-cat' : '' %>">All</a></li>
+        <% categories.forEach(cat => { %>
+          <li><a href="/?genre=<%= cat %>" class="<%= genre === cat ? 'active-cat' : '' %>"><%= cat %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="nav-right"><span class="logo">Movie 4U</span></div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="filters">
+    <form id="filterForm" method="GET" action="/">
+      <input type="hidden" name="genre" value="<%= genre %>">
+      <input type="text" id="searchInput" name="search" placeholder="Search movies, actors..." value="<%= search %>" oninput="autoSubmit()">
+      <select name="sort" onchange="autoSubmit()">
+        <option value="">Sort By</option>
+        <option value="title" <%= sort === 'title' ? 'selected' : '' %>>Title</option>
+        <option value="rating" <%= sort === 'rating' ? 'selected' : '' %>>Rating</option>
+        <option value="year" <%= sort === 'year' ? 'selected' : '' %>>Year</option>
+      </select>
+    </form>
+  </div>
+
+  <div class="movie-grid">
+    <% movies.forEach(movie => { %>
+      <div class="movie-card">
+        <img src="/uploads/<%= movie.img %>" alt="<%= movie.title %>">
+        <div class="movie-info">
+          <h3><%= movie.title %></h3>
+          <p><strong><%= movie.genre %></strong> | <%= movie.releaseYear %> | ⭐ <%= movie.rating %></p>
+          <div class="actions">
+            <a href="/edit/<%= movie._id %>" class="edit-link">Edit</a>
+            <a href="/delete/<%= movie._id %>" class="delete-link" onclick="return confirm('Delete karein?')">Delete</a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="pagination">
+    <% for(let i=1; i<=totalPages; i++) { %>
+      <a href="/?page=<%= i %>&genre=<%= genre %>&search=<%= search %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+  </div>
+</main>
+
+<script>
+  let timer;
+  function autoSubmit() {
+    clearTimeout(timer);
+    timer = setTimeout(() => { document.getElementById('filterForm').submit(); }, 500);
+  }
+</script>
+</body>
+</html>

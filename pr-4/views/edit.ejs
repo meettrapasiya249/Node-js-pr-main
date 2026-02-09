@@ -1,0 +1,42 @@
+  
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Edit Book</h1> 
+      <div class="form-container">
+        <form action="/update/<%= book._id %>" method="POST">
+          <div class="input-group">
+            <label>Book Title</label>
+            <input type="text" name="title" value="<%= book.title %>" required />
+          </div> 
+          <div class="input-group">
+            <label>Author</label>
+            <input type="text" name="author" value="<%= book.author %>" required />
+          </div>  
+          <div class="input-group">
+            <label>Price (₹)</label>
+            <input type="number" name="price" value="<%= book.price %>" required />
+          </div>   
+          <div class="input-group">
+            <label>Genre</label>
+            <input type="text" name="genre" value="<%= book.genre %>" required />
+          </div>  
+          <div class="input-group">
+            <label>Published Year</label>
+            <input type="number" name="publishedYear" value="<%= book.publishedYear %>" required />
+          </div>  
+          <div class="form-actions">
+            <button type="submit" class="btn-update"> Update Book</button>
+            <a href="/" class="btn-cancel">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  </html>
+   
