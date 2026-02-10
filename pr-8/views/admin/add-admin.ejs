@@ -1,0 +1,192 @@
+<%- include('../header') %>
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --input-focus: #667eea;
+        --border-color: #cbd5e0;
+        --bg-light: #f7fafc;
+    }
+
+    .page-wrapper {
+        padding-right: 120px;
+        background-color: var(--bg-light);
+        min-height: 100vh;
+        padding-top: 50px;
+    }
+
+    .add-admin-card {
+        border: none;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        max-width: 850px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .card-header-custom {
+        background: var(--primary-gradient);
+        padding: 20px;
+        color: white;
+        display: flex; /* Header me back button ke liye flex */
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 40px !important;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        height: 50px;
+        width: 100%;
+        border-radius: 15px;
+        border: 1.5px solid var(--border-color);
+        padding: 0 20px;
+        font-size: 15px;
+        color: #2d3748;
+        background-color: #fff;
+        box-sizing: border-box;
+    }
+
+    /* Back Button Styling in Header */
+    .btn-back-header {
+        color: white;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 15px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .btn-back-header:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Action Buttons at bottom */
+    .action-row {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-submit {
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 15px;
+        font-weight: 600;
+        flex: 2; /* Submit button ko bada rakha hai */
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .btn-cancel {
+        background: #edf2f7;
+        color: #4a5568;
+        border: 1px solid #cbd5e0;
+        padding: 14px;
+        border-radius: 15px;
+        font-weight: 600;
+        flex: 1; /* Back button chota */
+        text-align: center;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .btn-cancel:hover {
+        background: #e2e8f0;
+        color: #2d3748;
+        text-decoration: none;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .action-row { flex-direction: column; }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="add-admin-card">
+            
+            <div class="card-header-custom">
+                <h4 style="margin: 0;">Add Admin</h4>
+                <a href="/admin/view-admin" class="btn-back-header">
+                    <i class="mdi mdi-arrow-left mr-1"></i> Back
+                </a>
+            </div>
+
+            <div class="card-body">
+                <form action="/admin/add-admin" method="post" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div>
+                            <div class="form-group">
+                                <label>User Name</label>
+                                <input type="text" name="adminName" class="form-control" placeholder="Admin Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="adminPassword" class="form-control" placeholder="Enter Password" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="form-group">
+                                <label>Mobile</label>
+                                <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select name="gender" class="form-control" required style="appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'14\' height=\'14\' fill=\'%234a5568\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z\'/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: calc(100% - 20px) center; padding-right: 45px;">
+                                    <option value="" disabled selected>Choose Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Profile Image</label>
+                                <div style="border: 1.5px dashed #cbd5e0; border-radius: 15px; padding: 10px; background: #fdfdfd;">
+                                    <input type="file" name="profileImg" class="form-control-file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button type="submit" class="btn btn-submit">
+                            Add Admin
+                        </button> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>
