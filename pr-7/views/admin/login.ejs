@@ -13,111 +13,110 @@
 </head>
 
 <body>
-<div class="main-wrapper">
+    <div class="main-wrapper">
 
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
         </div>
-    </div>
 
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
-        <div class="auth-box bg-dark border-top border-secondary">
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+            <div class="auth-box bg-dark border-top border-secondary">
 
-            <div id="loginform">
-                <div class="text-center p-t-20 p-b-20">
-                    <span class="db">
-                        <img src="/assets/images/logo.png" alt="logo">
-                    </span>
+                <div id="loginform">
+                    <div class="text-center p-t-20 p-b-20">
+                        <span class="db">
+                            <img src="/assets/images/logo.png" alt="logo">
+                        </span>
+                    </div>
+
+                    <!-- FLASH MESSAGES -->
+                    <% if (messages && messages.error) { %>
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: '<%= messages.error[0] %>'
+                            });
+                        </script>
+                        <% } %>
+
+                            <% if (messages && messages.success) { %>
+                                <script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: '<%= messages.success[0] %>',
+                                        timer: 2000
+                                    });
+                                </script>
+                                <% } %>
+
+                                    <form class="form-horizontal m-t-20" action="/admin/login" method="POST">
+
+                                        <div class="row p-b-30">
+                                            <div class="col-12">
+
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-success text-white">
+                                                            <i class="ti-user"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="email" name="email"
+                                                        class="form-control form-control-lg" placeholder="Email"
+                                                        required>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-warning text-white">
+                                                            <i class="ti-lock"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" name="adminPassword"
+                                                        class="form-control form-control-lg" placeholder="Password"
+                                                        required>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-top border-secondary">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="p-t-20 d-flex justify-content-end">
+                                                        <button class="btn btn-success mr-2" type="submit">
+                                                            login
+                                                        </button>
+
+                                                        <a href="/admin/forgot-password" class="btn btn-info">
+                                                            Forgot Password
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
                 </div>
 
-                <!-- FLASH MESSAGES -->
-                <% if (messages && messages.error) { %>
-                    <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: '<%= messages.error[0] %>'
-                        });
-                    </script>
-                <% } %>
-
-                <% if (messages && messages.success) { %>
-                    <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: '<%= messages.success[0] %>',
-                            timer: 2000
-                        });
-                    </script>
-                <% } %>
-
-                <form class="form-horizontal m-t-20"
-                      action="/admin/login"
-                      method="POST">
-
-                    <div class="row p-b-30">
-                        <div class="col-12">
-
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-success text-white">
-                                        <i class="ti-user"></i>
-                                    </span>
-                                </div>
-                                <input type="email"
-                                       name="email"
-                                       class="form-control form-control-lg"
-                                       placeholder="Email"
-                                       required>
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-warning text-white">
-                                        <i class="ti-lock"></i>
-                                    </span>
-                                </div>
-                                <input type="password"
-                                       name="adminPassword"
-                                       class="form-control form-control-lg"
-                                       placeholder="Password"
-                                       required>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row border-top border-secondary">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <div class="p-t-20">
-                                    <button class="btn btn-success float-right" type="submit">
-                                        Login
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
             </div>
-
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="/dist/js/waves.js"></script>
+    <script src="/dist/js/sidebarmenu.js"></script>
+    <script src="/dist/js/custom.min.js"></script>
+
 </body>
-</html>
 
-<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script src="/assets/extra-libs/sparkline/sparkline.js"></script>
-<script src="/dist/js/waves.js"></script>
-<script src="/dist/js/sidebarmenu.js"></script>
-<script src="/dist/js/custom.min.js"></script>
+</html>
