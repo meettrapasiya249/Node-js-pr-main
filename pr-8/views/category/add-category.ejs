@@ -1,0 +1,108 @@
+<%- include('../header') %>
+
+<style>
+.page-wrapper {
+    background: #eeeeee;
+    padding-top: 50px;
+    min-height: 100vh;
+    padding-right: 130px;
+}
+.card {
+    max-width: 800px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: #fff;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+}
+.card-body {
+    padding: 30px 40px;
+}
+.form-control {
+    width: 100%;
+    height: 40px;
+    padding: 8px 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 2px;
+}
+.btn-success {
+    background-color: #28b779;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+}
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Add Category</h4>
+                <a href="/category/view-category" class="btn btn-primary btn-sm">
+                    Back
+                </a>
+            </div>
+
+            <div class="card-body">
+                <form action="/category/add-category" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" name="categoryName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category Image</label>
+                        <input type="file" name="profileImg" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        Add Category
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+<% if (messages.success && messages.success.length > 0) { %>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '<%= messages.success[0] %>',
+        timer: 3000,
+        showConfirmButton: false
+    });
+<% } %>
+
+<% if (messages.error && messages.error.length > 0) { %>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= messages.error[0] %>',
+        timer: 3000,
+        showConfirmButton: false
+    });
+<% } %>
+</script>
+
+<%- include('../footer') %>

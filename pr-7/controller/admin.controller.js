@@ -78,10 +78,38 @@ const addAdmin = async (req, res) => {
 }
 
 /* ================= VIEW ADMIN ================= */
+/* ================= VIEW ADMIN (With Search & Filter) ================= */
 const viewAdmin = async (req, res) => {
-    const admins = await adminModel.find()
-    const currentAdmin = await adminModel.findById(req.session.adminId)
-    res.render('admin/view-admin', { admins, currentAdmin })
+    try {
+        const { search, gender } = req.query;
+        let query = {};
+
+        // Only add to query if the user actually typed something
+        if (search && search.trim() !== "") {
+            query.$or = [
+                { adminName: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        if (gender && gender !== "") {
+            query.gender = gender;
+        }
+
+        // If search/gender are empty, query is {}, which returns ALL admins
+        const admins = await adminModel.find(query);
+        const currentAdmin = await adminModel.findById(req.session.adminId);
+
+        res.render('admin/view-admin', { 
+            admins, 
+            currentAdmin, 
+            search: search || '', 
+            gender: gender || '' 
+        });
+    } catch (error) {
+        console.error("View Admin Error:", error);
+        res.redirect('/admin/dashboard');
+    }
 }
 
 /* ================= DELETE ADMIN ================= */

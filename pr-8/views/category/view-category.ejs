@@ -1,0 +1,115 @@
+<%- include('../header') %>
+
+<style>
+.page-wrapper {
+    background: #eeeeee;
+    padding-right: 130px;
+    min-height: 100vh;
+}
+.container-fluid {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.card {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    background: #fff;
+}
+.card-header {
+    background-color: #fff;
+    padding: 15px 25px;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>View Category</h4>
+                <a href="/category/add-category" class="btn btn-success btn-sm">
+                    Add Category
+                </a>
+                 <a href="/category/add-category" class="btn btn-success btn-sm">
+                    Back
+                </a>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category Name</th>
+                            <th>Image</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (categories.length > 0) { %>
+                            <% categories.forEach((cat, index) => { %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= cat.categoryName %></td>
+                                    <td>
+                                        <% if (cat.profileImg) { %>
+                                            <img src="/uploads/<%= cat.profileImg %>">
+                                        <% } else { %>
+                                            No Image
+                                        <% } %>
+                                    </td>
+                                    <td><%= cat.date %></td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    No Category Found
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+<% if (messages.success && messages.success.length > 0) { %>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '<%= messages.success[0] %>',
+        timer: 3000,
+        showConfirmButton: false
+    });
+<% } %>
+
+<% if (messages.error && messages.error.length > 0) { %>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= messages.error[0] %>',
+        timer: 3000,
+        showConfirmButton: false
+    });
+<% } %>
+</script>
+
+<%- include('../footer') %>
