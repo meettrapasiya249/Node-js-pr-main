@@ -1,67 +1,149 @@
 <%- include('../header') %>
 
 <style>
-.page-wrapper {
-    background: #eeeeee;
-    padding-top: 50px;
-    min-height: 100vh;
-    padding-right: 130px;
-}
-.card {
-    max-width: 800px;
-    margin: 0 auto;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    background: #fff;
-}
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 25px;
-    background-color: #fff;
-    border-bottom: 1px solid #f1f1f1;
-}
-.card-body {
-    padding: 30px 40px;
-}
-.form-control {
-    width: 100%;
-    height: 40px;
-    padding: 8px 15px;
-    border: 1px solid #e9ecef;
-    border-radius: 2px;
-}
-.btn-success {
-    background-color: #28b779;
-    color: #fff;
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: none;
-}
+    /* Premium Modern Dashboard UI */
+    :root {
+        --base-bg: #f9fafb;
+        --surface: #ffffff;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --brand: #10b981; /* Modern Emerald Green */
+        --brand-hover: #059669;
+        --border: #e5e7eb;
+        --focus-ring: rgba(16, 185, 129, 0.15);
+    }
+
+    .page-wrapper {
+        background-color: var(--base-bg);
+        min-height: 100vh;
+        padding-right: 130px;
+        padding-top: 30px;
+        font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    .container-fluid {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Minimalist Card Design */
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    /* Sleek Back Button */
+    .btn-back {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        transition: all 0.2s;
+        background: #fff;
+    }
+
+    .btn-back:hover {
+        background: #f3f4f6;
+        color: var(--text-primary);
+    }
+
+    .card-body {
+        padding: 32px;
+    }
+
+    /* Clean Form Styling */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 42px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background-color: #fff;
+        color: var(--text-primary);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    /* Better File Input */
+    .form-control[type="file"] {
+        padding: 6px;
+        font-size: 0.85rem;
+        cursor: pointer;
+    }
+
+    /* High-End Action Button */
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--brand);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+        background-color: var(--brand-hover);
+    }
 </style>
 
 <div class="page-wrapper">
     <div class="container-fluid">
-
         <div class="card">
             <div class="card-header">
                 <h4>Add Category</h4>
-                <a href="/category/view-category" class="btn btn-primary btn-sm">
-                    Back
+                <a href="/category/view-category" class="btn-back">
+                    &larr; Back
                 </a>
             </div>
 
             <div class="card-body">
                 <form action="/category/add-category" method="POST" enctype="multipart/form-data">
-
                     <div class="form-group">
                         <label>Category Name</label>
-                        <input type="text" name="categoryName" class="form-control" required>
+                        <input type="text" name="categoryName" placeholder="Enter category name" class="form-control" required>
                     </div>
 
                     <div class="form-group">
@@ -69,40 +151,35 @@
                         <input type="file" name="profileImg" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-success">
-                        Add Category
+                    <button type="submit" class="btn-submit">
+                        Save Category
                     </button>
-
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
-<!-- SweetAlert2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-<% if (messages.success && messages.success.length > 0) { %>
-    Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: '<%= messages.success[0] %>',
-        timer: 3000,
-        showConfirmButton: false
-    });
-<% } %>
+    const showAlert = (icon, title, text) => {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text,
+            showConfirmButton: false,
+            timer: 2500,
+            borderRadius: '12px'
+        });
+    };
 
-<% if (messages.error && messages.error.length > 0) { %>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '<%= messages.error[0] %>',
-        timer: 3000,
-        showConfirmButton: false
-    });
-<% } %>
+    <% if (messages.success && messages.success.length > 0) { %>
+        showAlert('success', 'Success', '<%= messages.success[0] %>');
+    <% } %>
+
+    <% if (messages.error && messages.error.length > 0) { %>
+        showAlert('error', 'Error', '<%= messages.error[0] %>');
+    <% } %>
 </script>
 
 <%- include('../footer') %>

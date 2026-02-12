@@ -1,0 +1,255 @@
+<%- include('../header') %>
+
+<style>
+    :root {
+        --bg-color: #f8fafc;
+        --surface: #ffffff;
+        --primary: #10b981;
+        --primary-hover: #059669;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-wrapper {
+        background: var(--bg-color);
+        min-height: 100vh;
+        /* Vertical layout to stack card and footer */
+        display: flex;
+        padding-right: 130px!important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+
+    .container-fluid {
+        width: 100%;
+        max-width: 550px;
+        /* Flex grow helps push the footer down if the screen is tall */
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 24px 32px;
+        background: #fff;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h4 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .btn-back {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 8px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+        background: #f1f5f9;
+        color: var(--text-main);
+    }
+
+    .card-body {
+        padding: 32px 40px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: 10px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 48px;
+        padding: 10px 16px;
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+
+    .current-image-box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border: 1px dashed #cbd5e1;
+    }
+
+    .current-image-box img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .img-info {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    .btn-update {
+        width: 100%;
+        padding: 16px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-update:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Footer Section at the bottom */
+    .footer-content {
+        width: 100%;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        padding: 20px 0;
+        border-top: 1px solid var(--border-color);
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit Category</h4>
+                <a href="/category/view-category" class="btn-back">
+                    &larr; Back
+                </a>
+            </div>
+
+            <div class="card-body">
+                <form action="/category/update-category/<%= category._id %>" 
+                      method="POST" 
+                      enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text"
+                               name="categoryName"
+                               class="form-control"
+                               value="<%= category.categoryName %>"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current Status</label>
+                        <div class="current-image-box">
+                            <% if (category.profileImg) { %>
+                                <img src="/uploads/<%= category.profileImg %>">
+                                <div class="img-info">
+                                    <strong>Existing File:</strong><br>
+                                    <%= category.profileImg.substring(0, 20) %>...
+                                </div>
+                            <% } else { %>
+                                <div class="img-info">No image found.</div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload New Image (Optional)</label>
+                        <input type="file"
+                               name="profileImg"
+                               class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn-update">
+                        Update Category
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-content">
+        All Rights Reserved by Matrix-admin. Designed and Developed by 
+        <a href="#" style="color: var(--primary); text-decoration: none;">WrapPixel</a>.
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+
+    <% if (messages.success && messages.success.length > 0) { %>
+        Toast.fire({
+            icon: 'success',
+            title: '<%= messages.success[0] %>'
+        });
+    <% } %>
+
+    <% if (messages.error && messages.error.length > 0) { %>
+        Toast.fire({
+            icon: 'error',
+            title: '<%= messages.error[0] %>'
+        });
+    <% } %>
+</script>
+
+<%- include('../footer') %>

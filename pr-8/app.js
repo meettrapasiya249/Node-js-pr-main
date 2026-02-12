@@ -109,6 +109,7 @@ app.post('/test-login', async (req, res) => {
 app.use('/',require('./routes/index.routes'))
 app.use('/admin',require('./routes/admin.routes'))
 app.use('/category', require('./routes/category.routes'))
+app.use('/subcategory', require('./routes/subcategory.routes'))
 
 // ================= SERVER =================
 app.listen(port,()=>{

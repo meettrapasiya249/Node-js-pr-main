@@ -1,0 +1,57 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit SubCategory</h4>
+                <a href="/subcategory/view-subcategory" class="btn btn-secondary btn-sm">
+                    ← Back
+                </a>
+            </div>
+
+            <div class="card-body">
+
+                <% if (messages.error && messages.error.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <%= messages.error[0] %>
+                    </div>
+                <% } %>
+
+                <form action="/subcategory/update-subcategory/<%= subcategory._id %>" 
+                      method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group mb-3">
+                        <label>SubCategory Name</label>
+                        <input type="text" name="subcategoryName" 
+                               value="<%= subcategory.subcategoryName %>" 
+                               class="form-control" required>
+                    </div>
+
+                    <% if (subcategory.profileImg) { %>
+                        <div class="mb-3">
+                            <label>Current Image:</label><br>
+                            <img src="/uploads/<%= subcategory.profileImg %>" 
+                                 width="80" height="80" style="object-fit:cover;">
+                        </div>
+                    <% } %>
+
+                    <div class="form-group mb-3">
+                        <label>Change Image</label>
+                        <input type="file" name="profileImg" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        Update SubCategory
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../footer') %>

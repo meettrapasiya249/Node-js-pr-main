@@ -1,0 +1,86 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>SubCategory Management</h4>
+                <a href="/subcategory/add-subcategory" class="btn btn-primary btn-sm">
+                    + Add SubCategory
+                </a>
+            </div>
+
+            <div class="card-body">
+
+                <% if (messages.success && messages.success.length > 0) { %>
+                    <div class="alert alert-success">
+                        <%= messages.success[0] %>
+                    </div>
+                <% } %>
+
+                <% if (messages.error && messages.error.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <%= messages.error[0] %>
+                    </div>
+                <% } %>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% if (subcategories.length > 0) { %>
+                                <% subcategories.forEach((sub, index) => { %>
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+                                        <td><%= sub.subcategoryName %></td>
+                                        <td>
+                                            <% if (sub.profileImg) { %>
+                                                <img src="/uploads/<%= sub.profileImg %>" width="60" height="60" style="object-fit:cover;">
+                                            <% } else { %>
+                                                N/A
+                                            <% } %>
+                                        </td>
+                                        <td><%= sub.date %></td>
+                                        <td>
+                                            <a href="/subcategory/edit-subcategory/<%= sub._id %>" 
+                                               class="btn btn-warning btn-sm">
+                                                Edit
+                                            </a>
+
+                                            <a href="/subcategory/delete-subcategory/<%= sub._id %>" 
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Are you sure you want to delete this subcategory?')">
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        No SubCategories Found
+                                    </td>
+                                </tr>
+                            <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../footer') %>

@@ -213,7 +213,7 @@ body[data-theme="dark"] {
     text-shadow: none; }
     body[data-theme="dark"] .mce-btn button {
       color: #b2b9bf; }
-  body[data-theme="dark"] .page-wrapper,
+  body[data-theme="dark"] .,
   body[data-theme="dark"] .form-control,
   body[data-theme="dark"] .custom-select,
   body[data-theme="dark"] .chat-list .chat-item .chat-content .box.bg-light-info,
@@ -8281,11 +8281,11 @@ html[dir="ltr"] body .p-l-0 {
   width: 100%;
   overflow: hidden; }
 
-.page-wrapper {
+. {
   background: #eef5f9;
   position: relative; }
 
-.page-wrapper > .container-fluid {
+. > .container-fluid {
   padding: 20px;
   min-height: calc(100vh - 180px); }
 
@@ -8343,9 +8343,9 @@ html[dir="ltr"] body .p-l-0 {
     -webkit-transition: 0.2s ease-in;
     -o-transition: 0.2s ease-in;
     transition: 0.2s ease-in; }
-  #main-wrapper[data-layout="vertical"][data-sidebartype="full"] .page-wrapper {
+  #main-wrapper[data-layout="vertical"][data-sidebartype="full"] . {
     margin-left: 250px; }
-  #main-wrapper[data-layout="vertical"][data-sidebartype="iconbar"] .page-wrapper {
+  #main-wrapper[data-layout="vertical"][data-sidebartype="iconbar"] . {
     margin-left: 180px; }
   #main-wrapper[data-layout="vertical"][data-sidebartype="iconbar"] .left-sidebar,
   #main-wrapper[data-layout="vertical"][data-sidebartype="iconbar"] .topbar .top-navbar .navbar-header,
@@ -8371,7 +8371,7 @@ html[dir="ltr"] body .p-l-0 {
   #main-wrapper[data-layout="vertical"][data-header-position="fixed"] .topbar {
     position: fixed;
     width: 100%; }
-  #main-wrapper[data-layout="vertical"][data-header-position="fixed"] .page-wrapper {
+  #main-wrapper[data-layout="vertical"][data-header-position="fixed"] . {
     padding-top: 64px; }
   #main-wrapper[data-layout="vertical"][data-boxed-layout="boxed"] {
     max-width: 1200px;
@@ -8408,9 +8408,9 @@ html[dir="ltr"] body .p-l-0 {
         #main-wrapper[data-layout="vertical"][data-sidebartype="mini-sidebar"] .topbar .top-navbar .navbar-header.expand-logo .logo-text {
           display: block; }
     #main-wrapper[data-layout="vertical"][data-sidebar-position="fixed"][data-sidebartype="mini-sidebar"] .topbar .top-navbar .navbar-collapse {
-      margin-left: 65px; }
-    #main-wrapper[data-layout="vertical"][data-sidebartype="mini-sidebar"] .page-wrapper {
-      margin-left: 65px; }
+      margin-left: 0px; }
+    #main-wrapper[data-layout="vertical"][data-sidebartype="mini-sidebar"] . {
+      margin-left: 0px; }
     #main-wrapper[data-layout="vertical"][data-sidebartype="mini-sidebar"] .sidebar-nav .hide-menu,
     #main-wrapper[data-layout="vertical"][data-sidebartype="mini-sidebar"] .sidebar-nav .has-arrow:after {
       display: none; }
@@ -12750,10 +12750,10 @@ Padding margin property
     margin-left: 5px; }
   html[dir="rtl"] #main-wrapper {
     /*sidebar type*/ }
-    html[dir="rtl"] #main-wrapper[data-sidebartype="full"] .page-wrapper {
+    html[dir="rtl"] #main-wrapper[data-sidebartype="full"] . {
       margin-right: 250px;
       margin-left: 0; }
-    html[dir="rtl"] #main-wrapper[data-sidebartype="iconbar"] .page-wrapper {
+    html[dir="rtl"] #main-wrapper[data-sidebartype="iconbar"] . {
       margin-right: 180px;
       margin-left: 0; }
     html[dir="rtl"] #main-wrapper[data-sidebartype="overlay"] .left-sidebar {
@@ -12780,7 +12780,7 @@ Padding margin property
       html[dir="rtl"] #main-wrapper[data-sidebar-position="fixed"][data-sidebartype="mini-sidebar"] .topbar .top-navbar .navbar-collapse {
         margin-right: 65px;
         margin-left: 0; }
-      html[dir="rtl"] #main-wrapper[data-sidebartype="mini-sidebar"] .page-wrapper {
+      html[dir="rtl"] #main-wrapper[data-sidebartype="mini-sidebar"] . {
         margin-right: 65px;
         margin-left: 0; } }
   @media (max-width: 766px) {
@@ -14659,7 +14659,7 @@ File: scss
   #main-wrapper[data-layout="horizontal"][data-sidebar-position="fixed"] .left-sidebar {
     padding-top: 64px;
     position: fixed; }
-  #main-wrapper[data-layout="horizontal"][data-sidebar-position="fixed"] .page-wrapper {
+  #main-wrapper[data-layout="horizontal"][data-sidebar-position="fixed"] . {
     padding-top: 78px; }
 
 /****************************
@@ -14678,7 +14678,7 @@ This is for the horizontal layout
       -webkit-transition: 0s;
       -o-transition: 0s;
       transition: 0s; }
-    #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] .top-navbar, #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] .scroll-sidebar, #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] .page-wrapper {
+    #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] .top-navbar, #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] .scroll-sidebar, #main-wrapper[data-layout="horizontal"][data-boxed-layout="boxed"] . {
       max-width: 1200px;
       margin: 0 auto;
       position: relative; }

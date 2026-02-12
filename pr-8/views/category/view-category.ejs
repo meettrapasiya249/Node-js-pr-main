@@ -1,36 +1,168 @@
 <%- include('../header') %>
 
 <style>
-.page-wrapper {
-    background: #eeeeee;
-    padding-right: 130px;
-    min-height: 100vh;
-}
-.container-fluid {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-.card {
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.05);
-    background: #fff;
-}
-.card-header {
-    background-color: #fff;
-    padding: 15px 25px;
-    border-bottom: 1px solid #f1f1f1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.table img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
+    /* Premium Dashboard UI Variables */
+    :root {
+        --bg-color: #f8fafc;
+        --surface: #ffffff;
+        --primary: #10b981;
+        --primary-hover: #059669;
+        --danger: #ef4444;
+        --danger-light: #fee2e2;
+        --info: #3b82f6;
+        --info-light: #dbeafe;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-wrapper {
+        background: var(--bg-color);
+        min-height: 100vh;
+        padding: 40px 0;
+        padding-right: 130px;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .container-fluid {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Card Styling */
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 24px 30px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h4 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.02em;
+    }
+
+    /* Table Styling */
+    .table-responsive {
+        padding: 0;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background: #f1f5f9;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        padding: 16px 24px;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .table td {
+        padding: 18px 24px;
+        vertical-align: middle;
+        color: var(--text-main);
+        border-bottom: 1px solid var(--border-color);
+        font-size: 0.95rem;
+    }
+
+    /* Image Styling */
+    .category-img-container {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background: #f8fafc;
+    }
+
+    .category-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Button Styling */
+    .btn-custom {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn-add {
+        background: var(--primary);
+        color: #fff;
+    }
+
+    .btn-add:hover {
+        background: var(--primary-hover);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-edit {
+        background: var(--info-light);
+        color: var(--info);
+    }
+
+    .btn-edit:hover {
+        background: var(--info);
+        color: #fff;
+    }
+
+    .btn-delete {
+        background: var(--danger-light);
+        color: var(--danger);
+    }
+
+    .btn-delete:hover {
+        background: var(--danger);
+        color: #fff;
+    }
+
+    /* Empty State */
+    .no-data {
+        padding: 60px 0;
+        color: var(--text-muted);
+        text-align: center;
+        font-style: italic;
+    }
 </style>
 
 <div class="page-wrapper">
@@ -38,50 +170,64 @@
 
         <div class="card">
             <div class="card-header">
-                <h4>View Category</h4>
-                <a href="/category/add-category" class="btn btn-success btn-sm">
-                    Add Category
-                </a>
-                 <a href="/category/add-category" class="btn btn-success btn-sm">
-                    Back
+                <h4>Category Management</h4>
+                <a href="/category/add-category" class="btn-custom btn-add">
+                    + Add Category
                 </a>
             </div>
 
-            <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Category Name</th>
-                            <th>Image</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (categories.length > 0) { %>
-                            <% categories.forEach((cat, index) => { %>
-                                <tr>
-                                    <td><%= index + 1 %></td>
-                                    <td><%= cat.categoryName %></td>
-                                    <td>
-                                        <% if (cat.profileImg) { %>
-                                            <img src="/uploads/<%= cat.profileImg %>">
-                                        <% } else { %>
-                                            No Image
-                                        <% } %>
-                                    </td>
-                                    <td><%= cat.date %></td>
-                                </tr>
-                            <% }) %>
-                        <% } else { %>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td colspan="4" class="text-center">
-                                    No Category Found
-                                </td>
+                                <th width="80">#</th>
+                                <th>Category Name</th>
+                                <th>Preview</th>
+                                <th>Date Created</th>
+                                <th class="text-center">Action</th>
                             </tr>
-                        <% } %>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <% if (categories.length > 0) { %>
+                                <% categories.forEach((cat, index) => { %>
+                                    <tr>
+                                        <td class="text-muted"><%= index + 1 %></td>
+                                        <td style="font-weight: 600;"><%= cat.categoryName %></td>
+                                        <td>
+                                            <div class="category-img-container">
+                                                <% if (cat.profileImg) { %>
+                                                    <img src="/uploads/<%= cat.profileImg %>">
+                                                <% } else { %>
+                                                    <div style="font-size: 10px; text-align: center; line-height: 50px;">N/A</div>
+                                                <% } %>
+                                            </div>
+                                        </td>
+                                        <td style="color: var(--text-muted); font-size: 0.85rem;">
+                                            <%= cat.date %>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/category/edit-category/<%= cat._id %>" class="btn-custom btn-edit">
+                                                Edit
+                                            </a>
+                                            <a href="/category/delete-category/<%= cat._id %>" 
+                                               class="btn-custom btn-delete"
+                                               onclick="return confirm('Are you sure you want to delete this category?')">
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" class="no-data">
+                                        No categories found in the database.
+                                    </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -91,25 +237,27 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-<% if (messages.success && messages.success.length > 0) { %>
-    Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: '<%= messages.success[0] %>',
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
         timer: 3000,
-        showConfirmButton: false
+        timerProgressBar: true
     });
-<% } %>
 
-<% if (messages.error && messages.error.length > 0) { %>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '<%= messages.error[0] %>',
-        timer: 3000,
-        showConfirmButton: false
-    });
-<% } %>
+    <% if (messages.success && messages.success.length > 0) { %>
+        Toast.fire({
+            icon: 'success',
+            title: '<%= messages.success[0] %>'
+        });
+    <% } %>
+
+    <% if (messages.error && messages.error.length > 0) { %>
+        Toast.fire({
+            icon: 'error',
+            title: '<%= messages.error[0] %>'
+        });
+    <% } %>
 </script>
 
 <%- include('../footer') %>
