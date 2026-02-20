@@ -2,12 +2,10 @@ const categoryModel = require('../model/category.model')
 const fs = require('fs')
 const path = require('path')
 
-/* ================= ADD CATEGORY PAGE ================= */
 const addcategoryPage = (req, res) => {
     res.render('category/add-category')
 }
 
-/* ================= ADD CATEGORY ================= */
 const addcategory = async (req, res) => {
     try {
         const { categoryName } = req.body
@@ -30,13 +28,30 @@ const addcategory = async (req, res) => {
 }
 
 /* ================= VIEW CATEGORY ================= */
+/* ================= VIEW CATEGORY (With Search & Filter) ================= */
 const viewCategory = async (req, res) => {
     try {
-        const categories = await categoryModel.find()
-        res.render('category/view-category', { categories })
+        let { search, date } = req.query;
+        let query = {};
+
+        if (search) {
+            query.categoryName = { $regex: search, $options: 'i' };
+        }
+
+        if (date) {
+            query.date = date; 
+        }
+
+        const categories = await categoryModel.find(query);
+        
+        res.render('category/view-category', { 
+            categories, 
+            search: search || '', 
+            date: date || '' 
+        });
     } catch (error) {
-        console.log(error)
-        res.render('category/view-category', { categories: [] })
+        console.log(error);
+        res.render('category/view-category', { categories: [], search: '', date: '' });
     }
 }
 

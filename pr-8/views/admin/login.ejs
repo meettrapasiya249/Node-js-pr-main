@@ -11,17 +11,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
-
 <body>
-    <div class="main-wrapper">
-
+    <div class="main-wrapper"> 
         <div class="preloader">
             <div class="lds-ripple">
                 <div class="lds-pos"></div>
                 <div class="lds-pos"></div>
             </div>
-        </div>
-
+        </div> 
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
             <div class="auth-box bg-dark border-top border-secondary">
 
@@ -54,7 +51,10 @@
                                 </script>
                                 <% } %>
 
-                                    <form class="form-horizontal m-t-20" action="/admin/login" method="POST">
+                                    <form id="adminLoginForm" class="form-horizontal m-t-20" action="/admin/login" method="POST">
+
+                                        <% /* preserve next param so login can redirect back */ %>
+                                        <input id="nextInput" type="hidden" name="next" value="<%= typeof queryNext !== 'undefined' ? queryNext : '' %>">
 
                                         <div class="row p-b-30">
                                             <div class="col-12">
@@ -87,11 +87,15 @@
                                         <div class="row border-top border-secondary">
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <div class="p-t-20 d-flex justify-content-center">
-                                                        <button class="btn btn-success mr-2" type="submit">
+                                                    <div class="p-t-20 d-flex justify-content-between align-items-center">
+                                                        <!-- Web button: submit the login form with next=/web so credentials are checked first -->
+                                                        <button id="webBtn" type="button" class="btn btn-primary">
+                                                            Web
+                                                        </button>
+
+                                                        <button id="loginBtn" class="btn btn-success" type="submit">
                                                             login
-                                                        </button> 
-                                                         
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,6 +118,32 @@
     <script src="/dist/js/sidebarmenu.js"></script>
     <script src="/dist/js/custom.min.js"></script>
 
+    <script>
+        // Ensure Web button submits credentials and redirects to /web when valid
+        (function(){
+            const webBtn = document.getElementById('webBtn')
+            const nextInput = document.getElementById('nextInput')
+            const frm = document.getElementById('adminLoginForm')
+
+            if (webBtn && nextInput && frm) {
+                webBtn.addEventListener('click', function(e){
+                    // set next to /web and submit
+                    nextInput.value = '/web'
+                    frm.submit()
+                })
+
+                // ensure clicking regular login clears next so default dashboard is used
+                const loginBtn = document.getElementById('loginBtn')
+                if (loginBtn) {
+                    loginBtn.addEventListener('click', function(){
+                        // clear next so controller sends to admin dashboard
+                        nextInput.value = ''
+                    })
+                }
+            }
+        })()
+    </script>
+
 </body>
 
-</html>
+</html>                                                                 

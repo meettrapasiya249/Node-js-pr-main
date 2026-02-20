@@ -65,8 +65,13 @@
                     <div class="row border-top border-secondary">
                         <div class="col-12">
                             <div class="form-group">
-                                <div class="p-t-20">
-                                    <button class="btn btn-success float-right" type="submit">
+                                <div class="p-t-20 d-flex justify-content-between align-items-center">
+                                    <!-- Web button: go to admin login with next=/web so user must authenticate first -->
+                                    <a href="/admin/login?next=/web" class="btn btn-primary">
+                                        Web
+                                    </a>
+
+                                    <button class="btn btn-success" type="submit">
                                         Login
                                     </button>
                                 </div>

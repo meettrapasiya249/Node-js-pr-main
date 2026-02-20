@@ -1,0 +1,244 @@
+<%- include('../header') %>
+
+<style>
+    :root {
+        --primary: #10b981;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --white: #ffffff;
+    }
+
+    .page-wrapper {
+        padding: 40px;
+        margin-left: 250px;
+        background: var(--bg-body);
+        padding-right: 120px;
+        min-height: 100vh;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .header-section h3 {
+        color: var(--text-main);
+        font-weight: 800;
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .add-btn {
+        background: var(--primary);
+        color: white !important;
+        padding: 12px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(19, 213, 149, 0.2);
+    }
+
+    .category-group-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 40px 0 15px 0;
+        padding: 15px 20px;
+        background: var(--white);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .parent-cat-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .cat-info h4 {
+        margin: 0;
+        font-size: 18px;
+        color: var(--text-main);
+        font-weight: 700;
+    }
+
+    .cat-info span {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .table-container {
+        background: var(--white);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .custom-table th {
+        background: #f8fafc;
+        padding: 15px 20px;
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
+    }
+
+    .custom-table td {
+        padding: 15px 20px;
+        border-bottom: 1px solid #f1f5f9;
+        color: var(--text-main);
+        font-size: 14px;
+    }
+
+    .badge-sub {
+        background: #eff6ff;
+        color: #3b82f6;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .action-links {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+    }
+
+    .edit-link { 
+        color: #3b82f6; 
+        text-decoration: none; 
+        font-weight: 600; 
+    }
+
+    .delete-link { 
+        color: #ef4444; 
+        text-decoration: none; 
+        font-weight: 600; 
+    }
+
+    @media (max-width: 992px) {
+        .page-wrapper { 
+            margin-left: 0; 
+            padding: 20px; 
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="header-section">
+        <h3>ExtraCategory Dashboard</h3>
+        <a href="/extracategory/add-extracategory" class="add-btn">
+            + Add ExtraCategory
+        </a>
+    </div>
+
+    <% if(Object.keys(groupedData).length > 0) { %>
+        <% Object.keys(groupedData).forEach(catName => { %>
+            
+            <div class="category-group-header">
+                <% if(groupedData[catName].categoryImage) { %>
+                    <img src="/uploads/<%= groupedData[catName].categoryImage %>" 
+                         class="parent-cat-img" 
+                         alt="Category">
+                <% } else { %>
+                    <div class="parent-cat-img" 
+                         style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:10px;">
+                        N/A
+                    </div>
+                <% } %>
+
+                <div class="cat-info">
+                    <h4><%= catName %></h4>
+                    <span>
+                        Total Items: 
+                        <%= groupedData[catName].subItems.length %>
+                    </span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="35%">ExtraCategory Name</th>
+                            <th width="35%">Parent SubCategory</th>
+                            <th width="25%" style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% groupedData[catName].subItems.forEach((item, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+
+                                <td style="font-weight: 600;">
+                                    <%= item.extracategoryName %>
+                                </td>
+
+                                <td>
+                                    <span class="badge-sub">
+                                        <%= item.subcategoryId 
+                                            ? item.subcategoryId.subcategoryName 
+                                            : 'No SubCategory' %>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="action-links">
+                                        
+                                        <a href="/extracategory/edit-extracategory/<%= item._id %>" 
+                                           class="edit-link" 
+                                           title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+
+                                        <a href="/extracategory/delete-extracategory/<%= item._id %>" 
+                                           class="delete-link" 
+                                           onclick="return confirm('Are you sure?')" 
+                                           title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+        <% }) %>
+    <% } else { %>
+
+        <div style="text-align: center; padding: 100px 20px; background: white; border-radius: 20px; border: 1px dashed #cbd5e1; margin-top: 40px;">
+            <i class="fas fa-folder-open" 
+               style="font-size: 40px; color: #c7d2e0; margin-bottom: 15px;">
+            </i>
+            <p style="color: #64748b; font-weight: 500;">
+                No extra categories found in your records.
+            </p>
+            <a href="/extracategory/add-extracategory" 
+               style="color: var(--primary); font-weight: 600; text-decoration: none;">
+                Create one now →
+            </a>
+        </div>
+
+    <% } %>
+</div>
+
+<%- include('../footer') %>

@@ -1,0 +1,245 @@
+   <%- include('../header') %>
+
+   
+<style>
+    .product-card {
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .product-image-wrapper {
+        overflow: hidden;
+        height: 220px;
+        background-color: #f1f3f5;
+        position: relative;
+    }
+
+    .product-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-image-wrapper img {
+        transform: scale(1.1);
+    }
+
+    .card-title {
+        color: #1a1a1a;
+        font-size: 1.25rem;
+        letter-spacing: -0.5px;
+    }
+
+    .subcategory-section {
+        border-left: 3px solid #0d6efd;
+        background-color: #fcfcfc !important;
+        border-radius: 6px;
+        transition: background 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .subcategory-section:hover {
+        background-color: #f0f7ff !important;
+    }
+
+    .subcategory-section h6 {
+        color: #0d6efd;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .badge-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 50px; 
+        text-transform: capitalize;
+    }
+
+    .card-footer {
+        background-color: #fff !important;
+        border-top: 1px dashed #dee2e6;
+        padding: 1rem;
+    }
+
+    .text-muted {
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+    .action-buttons .btn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .action-buttons .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: white;
+    }
+
+    .action-buttons .btn-info:hover {
+        background-color: #138496;
+        transform: translateY(-2px);
+    }
+
+    .action-buttons .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #212529;
+    }
+
+    .action-buttons .btn-warning:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+    }
+
+    .action-buttons .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .action-buttons .btn-danger:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+    }
+
+    h1 {
+        font-weight: 800;
+        color: #2c3e50;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 60px;
+        height: 4px;
+        background: #0d6efd;
+        border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+        .product-image-wrapper {
+            height: 180px;
+        }
+        .container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+</style> 
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="mb-4">
+                <i class="fa fa-shopping-bag"></i> All Products
+            </h1>
+        </div>
+    </div> 
+    <% if(categories && categories.length > 0) { %>
+        <div class="row">
+            <% categories.forEach((category) => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="product-image-wrapper position-relative">
+                            <% if(category.profileImg) { %>
+                                <img src="/uploads/<%= category.profileImg %>" class="card-img-top" alt="<%= category.categoryName %>">
+                            <% } else { %>
+                                <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No Image">
+                            <% } %>
+                        </div> 
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">
+                                <strong><%= category.categoryName %></strong>
+                            </h5> 
+                            <% if(category.subcategories && category.subcategories.length > 0) { %>
+                                <% category.subcategories.forEach((subcategory) => { %>
+                                    <div class="subcategory-section mb-3 p-2 bg-light rounded">
+                                        <h6 class="text-dark mb-2 fw-bold">
+                                            <i class="fa fa-folder-open"></i> <%= subcategory.subcategoryName %>
+                                        </h6> 
+                                        <% 
+                                            const extraCatsForSub = category.extracategories.filter(extra => 
+                                                extra.subcategoryId.toString() === subcategory._id.toString()
+                                            );
+                                        %> 
+                                        <% if(extraCatsForSub.length > 0) { %>
+                                            <div class="extracategories-list">
+                                                <% extraCatsForSub.forEach((extra) => { %>
+                                                    <span class="badge badge-warning me-2 mb-2">
+                                                        <%= extra.extracategoryName %>
+                                                    </span>
+                                                <% }); %>
+                                            </div>
+                                        <% } else { %>
+                                            <p class="text-muted small mb-0">No extra categories</p>
+                                        <% } %>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <p class="text-muted small">No Subcategories</p>
+                            <% } %>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fa fa-calendar"></i> 
+                                    <% if(category.date) { %>
+                                        <%= category.date %>
+                                    <% } else { %>
+                                        Added
+                                    <% } %>
+                                </small>
+                                <div class="action-buttons">
+                                    <a href="/product/view-product/<%= category._id %>" class="btn btn-sm btn-info" title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a href="/product/edit-product/<%= category._id %>" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="/product/delete-product/<%= category._id %>" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure?')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info text-center" role="alert">
+            <h5>No Products Available</h5>
+            <p>Please try again later</p>
+        </div>
+    <% } %>
+</div>
+<%- include('../footer') %> 

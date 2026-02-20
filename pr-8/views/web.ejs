@@ -1,0 +1,285 @@
+ 
+    <%- include('header') %>
+    
+    <style>
+        :root{
+        --primary:#0d6efd;
+        --muted:#6c757d;
+    }
+    body { 
+        background: #f5f7fb; 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .web-menu { 
+        background:#fff; 
+        padding:12px 20px; 
+        border-bottom:1px solid #eee; 
+        position:sticky; 
+        top:0; 
+        z-index:50;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .web-menu .container { 
+        display:flex; 
+        gap:12px; 
+        align-items:center; 
+        flex-wrap:wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .web-menu .cat-btn{ 
+        padding:8px 16px; 
+        border-radius:30px; 
+        border:1px solid #e6e9ef; 
+        background:#fff; 
+        color:#495057; 
+        text-decoration:none;
+        font-size:0.95rem;
+        font-weight:500;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
+    .web-menu .cat-btn:hover {
+        background: #f8f9fa;
+        border-color: #c0c5d0;
+        color: #0d6efd;
+    }
+    .web-menu .cat-btn.active{ 
+        background:var(--primary); 
+        color:#fff; 
+        border-color:var(--primary);
+    }
+    .container { 
+        padding: 30px 20px; 
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .product-card { 
+        border-radius: 16px; 
+        overflow: hidden; 
+        box-shadow: 0 8px 24px rgba(15,20,30,0.06); 
+        background:#fff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 32px rgba(15,20,30,0.1);
+    }
+    .product-image { 
+        height: 220px; 
+        object-fit: cover; 
+        width: 100%; 
+        display:block;
+        background: #f8f9fa;
+    }
+    .card-title { 
+        font-weight: 700; 
+        color: #111827;
+        margin-bottom: 16px;
+        font-size: 1.4rem;
+    }
+    .badge { 
+        margin-right: 6px; 
+        margin-bottom: 6px;
+        background:#fffae6; 
+        color:#8a6d00; 
+        border-radius:999px; 
+        padding:6px 12px; 
+        font-size:0.85rem;
+        font-weight: 500;
+        display: inline-block;
+        border: 1px solid #ffe580;
+    }
+    .meta { 
+        color: var(--muted); 
+        font-size:0.9rem;
+    }
+    .admin-btn { 
+        margin-left: auto; 
+        padding:8px 20px; 
+        border-radius:30px; 
+        background:#2abf4d; 
+        color:#fff; 
+        text-decoration:none; 
+        border:1px solid #28a745;
+        font-weight: 500;
+        font-size:0.95rem;
+        transition: all 0.2s ease;
+    }
+    .admin-btn:hover {
+        background: #218838;
+        border-color: #1e7e34;
+        color: #fff;
+    }
+    .alert {
+        padding: 16px 24px;
+        border-radius: 12px;
+        background: #e7f3ff;
+        color: #0c5460;
+        border: 1px solid #b8e2ff;
+    }
+    .alert-info {
+        background: #e7f3ff;
+        color: #004085;
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .card-body strong {
+        color: #2c3e50;
+        font-size: 1rem;
+        display: block;
+        margin-bottom: 8px;
+    }
+    .text-muted {
+        color: #6c757d;
+        font-size: 0.95rem;
+        font-style: italic;
+    }
+    h2 {
+        font-weight: 600;
+        color: #1a2634;
+        letter-spacing: -0.02em;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .col-md-6, .col-lg-4, .col-12 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .h-100 {
+        height: 100%;
+    }
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .mb-2:last-child {
+        margin-bottom: 0;
+    }
+
+    @media (max-width:768px){ 
+        .product-image{height:160px} 
+        .web-menu .container{justify-content:center}
+        .admin-btn {
+            margin-left: 0;
+            width: 100%;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .web-menu .container {
+            gap: 8px;
+        }
+        .web-menu .cat-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+    }
+
+    aside.left-sidebar, .topbar .topbartoggler { 
+        display: none !important; 
+    }
+    .page-wrapper { 
+        margin-left: 0 !important; 
+        width: 100%;
+    }
+
+    </style>
+        <div class="web-menu">
+        <div class="container">
+            <div><strong>Categories:</strong></div>
+            <div>
+                <a href="/web" class="cat-btn <%= !selected ? 'active' : '' %>">All</a>
+                <% if (categories && categories.length) { %>
+                    <% categories.forEach((cat) => { %>
+                        <a href="/web?category=<%= cat._id %>" class="cat-btn <%= selected && String(selected._id)===String(cat._id) ? 'active' : '' %>"><%= cat.categoryName %></a>
+                    <% }) %>
+                <% } %>
+                <a href="/admin/view-admin" class="admin-btn">Go to Admin Panel</a>
+            </div>
+        </div>
+    </div> 
+    <div class="container">
+        <% if (selected) { %>
+            <h2 class="mb-4">Showing: <%= selected.categoryName %></h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card product-card mb-4">
+                        <% if (selected.profileImg) { %>
+                            <img src="/uploads/<%= selected.profileImg %>" class="product-image" alt="<%= selected.categoryName %>">
+                        <% } %>
+                        <div class="card-body">
+                            <h4 class="card-title"><%= selected.categoryName %></h4>
+                            <% if (selected.subcategories && selected.subcategories.length) { %>
+                                <% selected.subcategories.forEach((sc) => { %>
+                                    <div class="mb-2">
+                                        <strong><%= sc.subcategoryName %></strong>
+                                        <% const extras = selected.extracategories.filter(e => String(e.subcategoryId) === String(sc._id)) %>
+                                        <% if (extras && extras.length) { %>
+                                            <div>
+                                                <% extras.forEach((ex) => { %>
+                                                    <span class="badge badge-warning"><%= ex.extracategoryName %></span>
+                                                <% }) %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p class="text-muted">No subcategories</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <h2 class="mb-4">All Categories</h2>
+            <% if (categories && categories.length > 0) { %>
+                <div class="row">
+                    <% categories.forEach((category) => { %>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card product-card h-100">
+                                <% if (category.profileImg) { %>
+                                    <img src="/uploads/<%= category.profileImg %>" class="product-image" alt="<%= category.categoryName %>">
+                                <% } else { %>
+                                    <img src="https://via.placeholder.com/400x200?text=No+Image" class="product-image" alt="No Image">
+                                <% } %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= category.categoryName %></h5>
+                                    <% if (category.subcategories && category.subcategories.length > 0) { %>
+                                        <% category.subcategories.forEach((sc) => { %>
+                                            <div class="mb-2">
+                                                <strong><%= sc.subcategoryName %></strong>
+                                                <% const extras = category.extracategories.filter(e => String(e.subcategoryId) === String(sc._id)) %>
+                                                <% if (extras && extras.length > 0) { %>
+                                                    <div>
+                                                        <% extras.forEach((ex) => { %>
+                                                            <span class="badge badge-warning"><%= ex.extracategoryName %></span>
+                                                        <% }) %>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <p class="text-muted">No subcategories</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info">No products available</div>
+            <% } %>
+        <% } %>
+    </div> 
+    <%- include('footer') %> 
+ 

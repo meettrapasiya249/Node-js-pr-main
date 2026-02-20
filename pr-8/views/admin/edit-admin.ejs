@@ -1,272 +1,267 @@
-<%- include('../header') %>
+    <%- include('../header') %>
 
-<style>
-    :root {
-        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --input-focus: #667eea;
-        --bg-light: #f8f9fa;
-    }
-
-    /* Layout & Background */
-    .page-wrapper {
-        padding-right: 120px; /* Keeping your layout constraint */
-        background-color: var(--bg-light);
-        min-height: 100vh;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    /* Card Styling */
-    .edit-profile-card {
-        border: none;
-        border-radius: 15px;
-        background: #ffffff;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .card-header-custom {
-        background: var(--primary-gradient);
-        padding: 30px;
-        color: white;
-        text-align: center;
-    }
-
-    .card-header-custom h4 {
-        margin: 0;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        font-size: 1.25rem;
-    }
-
-    .card-body {
-        padding: 40px !important;
-    }
-
-    /* Form Design */
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-        font-weight: 600;
-        color: #495057;
-        margin-bottom: 8px;
-        display: block;
-        font-size: 0.9rem;
-    }
-
-    .form-control {
-        height: 45px;
-        border-radius: 8px;
-        border: 1px solid #ced4da;
-        padding: 10px 15px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .form-control:focus {
-        border-color: var(--input-focus);
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.1);
-        outline: none;
-    }
-
-    /* Custom Select */
-    select.form-control {
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: calc(100% - 30px) center;
-    }
-
-    /* Profile Image Section */
-    .image-upload-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background: #fdfdfd;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px dashed #ced4da;
-    }
-
-    .current-img-container {
-        position: relative;
-    }
-
-    .profile-preview {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 3px solid #fff;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    /* Action Buttons */
-    .btn-actions {
-        display: flex;
-        gap: 15px;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-
-    .btn {
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-submit {
-        background: var(--primary-gradient);
-        color: white;
-        border: none;
-        flex: 2;
-    }
-
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
-        color: white;
-    }
-
-    .btn-cancel {
-        background: #f1f3f5;
-        color: #495057;
-        border: 1px solid #dee2e6;
-        flex: 1;
-        text-align: center;
-        text-decoration: none;
-    }
-
-    .btn-cancel:hover {
-        background: #e9ecef;
-        color: #212529;
-    }
-
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-        .page-wrapper {
-            padding-right: 15px;
-            padding-left: 15px;
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --input-focus: #667eea;
+            --bg-light: #f8f9fa;
         }
-        .image-upload-wrapper {
-            flex-direction: column;
+
+        /* Layout & Background */
+        .page-wrapper {
+            padding-right: 120px; /* Keeping your layout constraint */
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Card Styling */
+        .edit-profile-card {
+            border: none;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card-header-custom {
+            background: var(--primary-gradient);
+            padding: 30px;
+            color: white;
             text-align: center;
         }
-        .card-body {
-            padding: 25px !important;
+
+        .card-header-custom h4 {
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.25rem;
         }
-    }
-</style>
 
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <div class="edit-profile-card">
-            
-            <div class="card-header-custom">
-                <h4><i class="fas fa-user-edit mr-2"></i> Edit Admin Profile</h4>
-            </div>
+        .card-body {
+            padding: 40px !important;
+        }
 
-            <div class="card-body">
+        /* Form Design */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-                <% if (typeof message !== 'undefined' && message) { %>
-                    <div class="alert alert-info alert-dismissible fade show" role="alert" style="border-radius: 10px;">
-                        <strong>Notice:</strong> <%= message %>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <% } %>
+        .form-group label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 0.9rem;
+        }
 
-                <% if (admin) { %>
-                    <form action="/admin/edit-profile/<%= admin._id %>" method="post" enctype="multipart/form-data">
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>User Name</label>
-                                    <input type="text" name="adminName" class="form-control" value="<%= admin.adminName %>" required placeholder="Enter full name">
+        .form-control {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 30px) center;
+        }
+
+        .image-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fdfdfd;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px dashed #ced4da;
+        }
+
+        .current-img-container {
+            position: relative;
+        }
+
+        .profile-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .btn-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-submit {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            flex: 2;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #f1f3f5;
+            color: #495057;
+            border: 1px solid #dee2e6;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-cancel:hover {
+            background: #e9ecef;
+            color: #212529;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+            .image-upload-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+            .card-body {
+                padding: 25px !important;
+            }
+        }
+    </style>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="edit-profile-card">
+                
+                <div class="card-header-custom">
+                    <h4><i class="fas fa-user-edit mr-2"></i> Edit Admin Profile</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <% if (typeof message !== 'undefined' && message) { %>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert" style="border-radius: 10px;">
+                            <strong>Notice:</strong> <%= message %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+
+                    <% if (admin) { %>
+                        <form action="/admin/edit-profile/<%= admin._id %>" method="post" enctype="multipart/form-data">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                        <input type="text" name="adminName" class="form-control" value="<%= admin.adminName %>" required placeholder="Enter full name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" name="email" class="form-control" value="<%= admin.email %>" required placeholder="example@mail.com">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="text" name="mobile" class="form-control" value="<%= admin.mobile %>" required placeholder="+1 234 567 890">
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input type="email" name="email" class="form-control" value="<%= admin.email %>" required placeholder="example@mail.com">
-                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select name="gender" class="form-control" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male" <%= admin.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                                            <option value="Female" <%= admin.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                                            <option value="Other" <%= admin.gender === 'Other' ? 'selected' : '' %>>Other</option>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label>Mobile Number</label>
-                                    <input type="text" name="mobile" class="form-control" value="<%= admin.mobile %>" required placeholder="+1 234 567 890">
-                                </div>
-                            </div>
+                                    <!-- <div class="form-group">
+                                        <label>Change Password</label>
+                                        <input type="password" name="adminPassword" class="form-control" placeholder="Leave blank to keep current">
+                                    </div> -->
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Gender</label>
-                                    <select name="gender" class="form-control" required>
-                                        <option value="">Select Gender</option>
-                                        <option value="Male" <%= admin.gender === 'Male' ? 'selected' : '' %>>Male</option>
-                                        <option value="Female" <%= admin.gender === 'Female' ? 'selected' : '' %>>Female</option>
-                                        <option value="Other" <%= admin.gender === 'Other' ? 'selected' : '' %>>Other</option>
-                                    </select>
-                                </div>
-
-                                <!-- <div class="form-group">
-                                    <label>Change Password</label>
-                                    <input type="password" name="adminPassword" class="form-control" placeholder="Leave blank to keep current">
-                                </div> -->
-
-                                <div class="form-group">
-                                    <label>Profile Picture</label>
-                                    <div class="image-upload-wrapper">
-                                        <div class="current-img-container">
-                                            <img src="/uploads/<%= admin.profileImg || 'default-avatar.png' %>" 
-                                                 id="imgPreview" 
-                                                 class="profile-preview" 
-                                                 alt="Profile">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <input type="file" name="profileImg" id="imageInput" class="form-control-file mb-2" accept="image/*" style="font-size: 0.8rem;">
-                                            <small class="text-muted d-block">Recommended: Square JPG or PNG</small>
+                                    <div class="form-group">
+                                        <label>Profile Picture</label>
+                                        <div class="image-upload-wrapper">
+                                            <div class="current-img-container">
+                                                <img src="/uploads/<%= admin.profileImg || 'default-avatar.png' %>" 
+                                                    id="imgPreview" 
+                                                    class="profile-preview" 
+                                                    alt="Profile">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <input type="file" name="profileImg" id="imageInput" class="form-control-file mb-2" accept="image/*" style="font-size: 0.8rem;">
+                                                <small class="text-muted d-block">Recommended: Square JPG or PNG</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div> 
+                            <div class="btn-actions">
+                                <button type="submit" class="btn btn-submit">
+                                    Update Profile
+                                </button>
+                                <a href="/admin/view-admin" class="btn btn-cancel">
+                                    Cancel
+                                </a>
                             </div>
+                        </form>
+                    <% } else { %>
+                        <div class="text-center py-5">
+                            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                            <p class="text-muted">Unable to load profile data. Please refresh the page.</p>
                         </div>
-
-                        <div class="btn-actions">
-                            <button type="submit" class="btn btn-submit">
-                                Update Profile
-                            </button>
-                            <a href="/admin/view-admin" class="btn btn-cancel">
-                                Cancel
-                            </a>
-                        </div>
-                    </form>
-                <% } else { %>
-                    <div class="text-center py-5">
-                        <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-                        <p class="text-muted">Unable to load profile data. Please refresh the page.</p>
-                    </div>
-                <% } %>
-
+                    <% } %> 
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>  
 
-<script>
-    document.getElementById('imageInput').onchange = evt => {
-        const [file] = document.getElementById('imageInput').files
-        if (file) {
-            document.getElementById('imgPreview').src = URL.createObjectURL(file)
+    <script>
+        document.getElementById('imageInput').onchange = evt => {
+            const [file] = document.getElementById('imageInput').files
+            if (file) {
+                document.getElementById('imgPreview').src = URL.createObjectURL(file)
+            }
         }
-    }
-</script>
-
-<%- include('../footer') %>
+    </script> 
+ 
+    <%- include('../footer') %>
+ 

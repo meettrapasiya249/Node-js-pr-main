@@ -1,0 +1,322 @@
+<%- include('../header') %>
+
+<h1 class="page-title text-center pt-4">
+    All Your Products
+</h1>
+<div class="container mt-5 mb-5">
+<% if(product) { %>
+
+    <!-- PRODUCT IMAGE + DETAILS -->
+    <div class="row align-items-stretch mb-4">
+
+        <!-- IMAGE COLUMN -->
+        <div class="col-md-5 mb-4">
+            <div class="product-detail-image-wrapper h-100">
+                <% if(product.profileImg) { %>
+                    <img src="/uploads/<%= product.profileImg %>" 
+                         alt="<%= product.categoryName %>" 
+                         class="img-fluid rounded shadow product-img">
+                <% } else { %>
+                    <img src="https://via.placeholder.com/500x500?text=No+Image" 
+                         class="img-fluid rounded shadow product-img">
+                <% } %>
+            </div>
+        </div>
+
+        <!-- DETAILS COLUMN -->
+        <div class="col-md-7 mb-4">
+            <div class="card shadow-lg product-detail-card h-100">
+
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="fa fa-box"></i> Product Details
+                    </h4>
+
+                    <a href="/product/view-allproduct" class="btn btn-light btn-sm">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </a>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="detail-section">
+                        <h6 class="detail-label">Product Name</h6>
+                        <h3 class="text-primary fw-bold">
+                            <%= product.categoryName %>
+                        </h3>
+                    </div>
+
+                    <div class="detail-section">
+                        <h6 class="detail-label">Product ID</h6>
+                        <p>
+                            <code><%= product._id %></code>
+                        </p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h6 class="detail-label">Date Added</h6>
+                        <p>
+                            <% if(product.date) { %>
+                                <i class="fa fa-calendar text-success"></i>
+                                <%= product.date %>
+                            <% } else { %>
+                                <span class="text-muted">Not specified</span>
+                            <% } %>
+                        </p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <a href="/product/edit-product/<%= product._id %>" 
+                           class="btn btn-warning me-2">
+                            <i class="fa fa-edit"></i> Edit
+                        </a>
+
+                        <a href="/product/delete-product/<%= product._id %>" 
+                           class="btn btn-danger"
+                           onclick="return confirm('This will permanently delete this product. Are you sure?')">
+                            <i class="fa fa-trash"></i> Delete
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- SUBCATEGORIES -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+                <i class="fa fa-sitemap"></i> Subcategories
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <% if(subcategories && subcategories.length > 0) { %>
+                <div class="row">
+                    <% subcategories.forEach((subcat, index) => { %>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="subcategory-card">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="text-primary mb-0">
+                                        <i class="fa fa-folder"></i> 
+                                        <%= subcat.subcategoryName %>
+                                    </h6>
+                                    <span class="badge bg-primary">
+                                        <%= index + 1 %>
+                                    </span>
+                                </div>
+
+                                <p class="text-muted small mt-2">
+                                    Category: 
+                                    <%= product.categoryName %>
+                                </p>
+
+                                <div class="mt-2">
+                                    <a href="/subcategory/edit-subcategory/<%= subcat._id %>" 
+                                       class="btn btn-sm btn-outline-warning me-1">
+                                        Edit
+                                    </a>
+                                    <a href="/subcategory/delete-subcategory/<%= subcat._id %>" 
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info">
+                    No subcategories found
+                </div>
+            <% } %>
+
+        </div>
+    </div>
+
+
+    <!-- EXTRA CATEGORIES -->
+    <div class="card shadow">
+        <div class="card-header bg-warning">
+            <h5 class="mb-0">
+                <i class="fa fa-tags"></i> Extra Categories
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <% if(extracategories && extracategories.length > 0) { %>
+                <div class="row">
+                    <% extracategories.forEach((extracat) => { %>
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="extra-category-card">
+                                <h6 class="text-dark">
+                                    <i class="fa fa-tag"></i> 
+                                    <%= extracat.extracategoryName %>
+                                </h6>
+
+                                <p class="text-muted small">
+                                    Subcategory:
+                                    <%= extracat.subcategoryId && extracat.subcategoryId.subcategoryName ? extracat.subcategoryId.subcategoryName : 'N/A' %>
+                                </p>
+
+                                <div>
+                                    <a href="/extracategory/edit-extracategory/<%= extracat._id %>" 
+                                       class="btn btn-sm btn-outline-warning me-1">
+                                        Edit
+                                    </a>
+                                    <a href="/extracategory/delete-extracategory/<%= extracat._id %>" 
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info">
+                    No extra categories found
+                </div>
+            <% } %>
+
+        </div>
+    </div>
+
+<% } else { %>
+
+    <div class="alert alert-danger text-center">
+        <h4>Product Not Found</h4>
+        <a href="/product/view-allproduct" class="btn btn-primary">
+            Go Back
+        </a>
+    </div>
+
+<% } %>
+
+</div>
+
+
+<style>
+
+/* IMAGE WRAPPER */
+.product-detail-image-wrapper {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* IMAGE */
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* DETAIL SECTION */
+.detail-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+}
+
+code {
+    background: #e9ecef;
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+.page-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.5px;
+    padding-bottom: 12px;
+}
+
+/* subtle modern underline */
+.page-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: #0d6efd;
+    border-radius: 10px;
+}
+
+/* subtle fade animation */
+.page-title {
+    animation: fadeSlide 0.6s ease forwards;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* SUBCATEGORY CARD */
+.subcategory-card {
+    background: #f8f9fa;
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.subcategory-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* EXTRA CATEGORY CARD */
+.extra-category-card {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.extra-category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .product-detail-image-wrapper {
+        min-height: 300px;
+    }
+}
+
+</style>
+
+<%- include('../footer') %>

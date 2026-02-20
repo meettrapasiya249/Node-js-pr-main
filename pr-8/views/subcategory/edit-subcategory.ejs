@@ -1,55 +1,177 @@
 <%- include('../header') %>
 
-<div class="page-wrapper">
-    <div class="container-fluid">
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        --surface: #ffffff;
+        --bg-color: #f1f5f9;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+    }
 
-        <div class="card">
+    .page-wrapper {
+        background: var(--bg-color);
+        min-height: 100vh;
+        padding: 80px 0;
+        margin-left: 250px;
+        padding-right: 130px;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .container-custom {
+        max-width: 500px; /* Thoda narrow kiya hai kyunki inputs kam hain */
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .edit-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+        padding: 25px 30px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .btn-back {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .btn-back:hover { color: var(--text-main); }
+
+    .card-body {
+        padding: 30px 40px 40px 40px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 2px solid var(--border);
+        background: #f8fafc;
+        font-size: 1rem;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #10b981;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        background: var(--primary-gradient);
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .alert-custom {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 12px 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+        border-left: 4px solid #ef4444;
+    }
+
+    @media (max-width: 768px) {
+        .page-wrapper { margin-left: 0; padding: 40px 0; }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-custom">
+
+        <div class="edit-card">
             <div class="card-header">
                 <h4>Edit SubCategory</h4>
-                <a href="/subcategory/view-subcategory" class="btn btn-secondary btn-sm">
-                    ← Back
+                <a href="/subcategory/view-subcategory" class="btn-back">
+                    <i class="fas fa-times"></i>
                 </a>
             </div>
 
             <div class="card-body">
-
                 <% if (messages.error && messages.error.length > 0) { %>
-                    <div class="alert alert-danger">
-                        <%= messages.error[0] %>
+                    <div class="alert-custom">
+                        <i class="fas fa-exclamation-circle"></i> <%= messages.error[0] %>
                     </div>
                 <% } %>
 
-                <form action="/subcategory/update-subcategory/<%= subcategory._id %>" 
-                      method="POST" enctype="multipart/form-data">
+                <form action="/subcategory/update-subcategory/<%= subcategory._id %>" method="POST">
 
-                    <div class="form-group mb-3">
-                        <label>SubCategory Name</label>
+                    <div class="form-group mb-4">
+                        <label class="form-label">SubCategory Name</label>
                         <input type="text" name="subcategoryName" 
                                value="<%= subcategory.subcategoryName %>" 
-                               class="form-control" required>
+                               class="form-control" 
+                               placeholder="e.g. Smart Watches" 
+                               required 
+                               autofocus>
                     </div>
 
-                    <% if (subcategory.profileImg) { %>
-                        <div class="mb-3">
-                            <label>Current Image:</label><br>
-                            <img src="/uploads/<%= subcategory.profileImg %>" 
-                                 width="80" height="80" style="object-fit:cover;">
-                        </div>
-                    <% } %>
-
-                    <div class="form-group mb-3">
-                        <label>Change Image</label>
-                        <input type="file" name="profileImg" class="form-control">
-                    </div>
-
-                    <button type="submit" class="btn btn-success">
-                        Update SubCategory
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i> Save Changes
                     </button>
-
+                    
                 </form>
-
             </div>
         </div>
+
+       
 
     </div>
 </div>

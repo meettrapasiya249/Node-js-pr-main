@@ -1,86 +1,260 @@
 <%- include('../header') %>
 
-<div class="page-wrapper">
-    <div class="container-fluid">
+    <style>
+        :root {
+            --primary: #0ec286;
+            --bg-body: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --white: #ffffff;
+        }
 
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>SubCategory Management</h4>
-                <a href="/subcategory/add-subcategory" class="btn btn-primary btn-sm">
-                    + Add SubCategory
+        .page-wrapper {
+            padding: 40px;
+            margin-left: 250px;
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding-right: 74px;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-section h3 {
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 26px;
+            margin: 0;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-form input,
+        .filter-form select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .edit-link {
+            border-radius: 8px;
+        }
+
+        .delete-link {
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .clear-btn {
+            background: #e2e8f0;
+            color: #1e293b;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .category-group-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0 15px 0;
+            padding: 10px;
+            background: #f1f5f9;
+            border-radius: 12px;
+        }
+
+        .parent-cat-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cat-info h4 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .cat-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th {
+            background: #fafafa;
+            padding: 14px 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .custom-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .action-links {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .delete-link {
+            color: #fb2e2e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        @media (max-width: 992px) {
+            .page-wrapper {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+
+    <div class="page-wrapper">
+        <div class="header-section">
+            <h3>SubCategory List</h3>
+            <form method="GET" action="/subcategory/view-subcategory" class="filter-form">
+                <input type="text" name="search" value="<%= search || '' %>" placeholder="Search SubCategory...">
+                <select name="category">
+                    <option value="all">All Categories</option>
+                    <% categories.forEach(cat=> { %>
+                        <option value="<%= cat._id %>" <%=category==cat._id ? "selected" : "" %>>
+                            <%= cat.categoryName %>
+                        </option>
+                        <% }) %>
+                </select>
+                <button type="submit" class="filter-btn">Filter</button>
+                <a href="/subcategory/view-subcategory" class="clear-btn">
+                    Clear
                 </a>
-            </div>
+            </form> 
+            <a href="/subcategory/add-subcategory" class="add-btn">+ Add SubCategory</a>
+        </div> 
+        <% if(Object.keys(groupedData).length> 0) { %> 
+            <% Object.keys(groupedData).forEach(catName=> { %> 
+                <div class="category-group-header">
+                    <% if(groupedData[catName].categoryImage) { %>
+                        <img src="/uploads/<%= groupedData[catName].categoryImage %>" class="parent-cat-img"
+                            alt="Category">
+                        <% } else { %>
+                            <div class="parent-cat-img"
+                                style="background:#cbd5e1; display:flex; align-items:center; justify-content:center; font-size:10px;">
+                                No Img
+                            </div>
+                            <% } %> 
+                                <div class="cat-info">
+                                    <h4>
+                                        <%= catName %>
+                                    </h4>
+                                    <span>Total Subcategories:
+                                        <%= groupedData[catName].subItems.length %>
+                                    </span>
+                                </div>
+                             </div> 
 
-            <div class="card-body">
-
-                <% if (messages.success && messages.success.length > 0) { %>
-                    <div class="alert alert-success">
-                        <%= messages.success[0] %>
-                    </div>
-                <% } %>
-
-                <% if (messages.error && messages.error.length > 0) { %>
-                    <div class="alert alert-danger">
-                        <%= messages.error[0] %>
-                    </div>
-                <% } %>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Image</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                <div class="table-container">
+                    <table class="custom-table">
                         <tbody>
-
-                            <% if (subcategories.length > 0) { %>
-                                <% subcategories.forEach((sub, index) => { %>
-                                    <tr>
-                                        <td><%= index + 1 %></td>
-                                        <td><%= sub.subcategoryName %></td>
-                                        <td>
-                                            <% if (sub.profileImg) { %>
-                                                <img src="/uploads/<%= sub.profileImg %>" width="60" height="60" style="object-fit:cover;">
-                                            <% } else { %>
-                                                N/A
-                                            <% } %>
-                                        </td>
-                                        <td><%= sub.date %></td>
-                                        <td>
-                                            <a href="/subcategory/edit-subcategory/<%= sub._id %>" 
-                                               class="btn btn-warning btn-sm">
-                                                Edit
-                                            </a>
-
-                                            <a href="/subcategory/delete-subcategory/<%= sub._id %>" 
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Are you sure you want to delete this subcategory?')">
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <% }) %>
-                            <% } else { %>
+                            <% groupedData[catName].subItems.forEach((sub, index)=> { %>
                                 <tr>
-                                    <td colspan="5" class="text-center">
-                                        No SubCategories Found
+                                    <td width="10%">
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td width="70%" style="font-weight: 500;">
+                                        <%= sub.subcategoryName %>
+                                    </td>
+                                    <td width="20%">
+                                        <div class="action-links">
+                                            <a href="/subcategory/-subcategory/<%= sub._id %>"
+                                                class="edit-link bg-info p-1">✏️</a>
+
+                                            <a href="/subcategory/delete-subcategory/<%= sub._id %>"
+                                                class="delete-link bg-dark p-1"
+                                                onclick="return confirm('Delete this?')">
+                                                🗑️
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
-                            <% } %>
-
+                                <% }) %>
                         </tbody>
                     </table>
                 </div>
 
-            </div>
-        </div>
+                <% }) %>
+
+                    <% } else { %>
+
+                        <div style="text-align: center; padding: 50px; background: white; border-radius: 15px;">
+                            <p style="color: #64748b;">No subcategories found.</p>
+                        </div>
+
+                        <% } %>
 
     </div>
-</div>
 
-<%- include('../footer') %>
+    <%- include('../footer') %>

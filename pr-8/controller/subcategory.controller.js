@@ -1,113 +1,170 @@
-const subcategoryModel = require('../model/subcategory.model')
-const fs = require('fs')
-const path = require('path')
+const subcategoryModel = require('../model/subcategory.model');
+const categoryModel = require('../model/category.model');
+const fs = require('fs');
+const path = require('path');
 
-/* ADD PAGE */
-const addsubcategoryPage = (req, res) => {
-    res.render('subcategory/add-subcategory')
-}
-
-/* ADD */
-const addsubcategory = async (req, res) => {
+/* ================= VIEW SUBCATEGORY (With Search + Filter + Grouping) ================= */
+const viewSubcategory = async (req, res) => {
     try {
-        const { subcategoryName } = req.body
-        const profileImg = req.file ? req.file.filename : ''
+        const { search, category } = req.query;
+
+        let filter = {};
+
+        // 🔍 Search by Subcategory Name
+        if (search) {
+            filter.subcategoryName = {
+                $regex: search,
+                $options: "i"
+            };
+        }
+
+        // 🎯 Filter by CategoryId
+        if (category && category !== "all") {
+            filter.categoryId = category;
+        }
+
+        // Fetch subcategories with populated category
+        const subcategories = await subcategoryModel
+            .find(filter)
+            .populate('categoryId');
+
+        const groupedData = {};
+
+        subcategories.forEach(sub => {
+            if (sub.categoryId) {
+                const catName = sub.categoryId.categoryName;
+                const catImg = sub.categoryId.profileImg;
+
+                if (!groupedData[catName]) {
+                    groupedData[catName] = {
+                        categoryImage: catImg,
+                        subItems: []
+                    };
+                }
+
+                groupedData[catName].subItems.push(sub);
+            }
+        });
+
+        // Fetch all categories for dropdown filter
+        const categories = await categoryModel.find();
+
+        res.render('subcategory/view-subcategory', {
+            groupedData,
+            categories,
+            search,
+            category
+        });
+
+    } catch (error) {
+        console.error("Error in viewSubcategory:", error);
+        res.render('subcategory/view-subcategory', {
+            groupedData: {},
+            categories: [],
+            search: "",
+            category: "all"
+        });
+    }
+};
+
+
+/* ================= ADD SUBCATEGORY PAGE ================= */
+const addSubcategoryPage = async (req, res) => {
+    try {
+        const categories = await categoryModel.find();
+        res.render('subcategory/add-subcategory', { categories });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/subcategory/view-subcategory');
+    }
+};
+
+
+/* ================= ADD SUBCATEGORY ================= */
+const addSubcategory = async (req, res) => {
+    try {
+        const { categoryId, subcategoryName } = req.body;
 
         await subcategoryModel.create({
-            subcategoryName,
-            profileImg,
-            date: new Date().toLocaleDateString()
-        })
+            categoryId,
+            subcategoryName
+        });
 
-        req.flash('success', 'SubCategory Added Successfully')
-        res.redirect('/subcategory/view-subcategory')
-
+        req.flash('success', 'SubCategory added successfully');
+        res.redirect('/subcategory/view-subcategory');
     } catch (error) {
-        console.log(error)
-        req.flash('error', 'Failed to Add SubCategory')
-        res.redirect('/subcategory/add-subcategory')
+        console.error(error);
+        req.flash('error', 'Failed to add subcategory');
+        res.redirect('/subcategory/add-subcategory');
     }
-}
+};
 
-/* VIEW */
-const viewsubcategory = async (req, res) => {
+
+/* ================= EDIT SUBCATEGORY PAGE ================= */
+const editSubcategoryPage = async (req, res) => {
     try {
-        const subcategories = await subcategoryModel.find()
-        res.render('subcategory/view-subcategory', { subcategories })
-    } catch (error) {
-        console.log(error)
-        res.render('subcategory/view-subcategory', { subcategories: [] })
-    }
-}
-
-/* EDIT PAGE */
-const editsubcategoryPage = async (req, res) => {
-    try {
-        const subcategory = await subcategoryModel.findById(req.params.id)
-        res.render('subcategory/edit-subcategory', { subcategory })
-    } catch (error) {
-        req.flash('error', 'SubCategory Not Found')
-        res.redirect('/subcategory/view-subcategory')
-    }
-}
-
-/* UPDATE */
-const updatesubcategory = async (req, res) => {
-    try {
-        const { subcategoryName } = req.body
-
-        const updateData = { subcategoryName }
-
-        if (req.file) {
-            updateData.profileImg = req.file.filename
-        }
-
-        await subcategoryModel.findByIdAndUpdate(req.params.id, updateData)
-
-        req.flash('success', 'SubCategory Updated Successfully')
-        res.redirect('/subcategory/view-subcategory')
-
-    } catch (error) {
-        console.log(error)
-        req.flash('error', 'Update Failed')
-        res.redirect('/subcategory/view-subcategory')
-    }
-}
-
-/* DELETE */
-const deletesubcategory = async (req, res) => {
-    try {
-        const subcategory = await subcategoryModel.findById(req.params.id)
+        const subcategory = await subcategoryModel.findById(req.params.id);
+        const categories = await categoryModel.find();
 
         if (!subcategory) {
-            req.flash('error', 'SubCategory Not Found')
-            return res.redirect('/subcategory/view-subcategory')
+            req.flash('error', 'SubCategory not found');
+            return res.redirect('/subcategory/view-subcategory');
         }
 
-        if (subcategory.profileImg) {
-            const imagePath = path.join(__dirname, '../uploads/', subcategory.profileImg)
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath)
-            }
-        }
-
-        await subcategoryModel.findByIdAndDelete(req.params.id)
-
-        req.flash('success', 'SubCategory Deleted Successfully')
-        res.redirect('/subcategory/view-subcategory')
-
+        res.render('subcategory/edit-subcategory', { subcategory, categories });
     } catch (error) {
-        console.log(error)
-        req.flash('error', 'Delete Failed')
-        res.redirect('/subcategory/view-subcategory')
+        console.error(error);
+        res.redirect('/subcategory/view-subcategory');
     }
-}
+};
+
+
+/* ================= UPDATE SUBCATEGORY ================= */
+const updateSubcategory = async (req, res) => {
+    try {
+        const { categoryId, subcategoryName } = req.body;
+
+        await subcategoryModel.findByIdAndUpdate(req.params.id, {
+            categoryId,
+            subcategoryName
+        });
+
+        req.flash('success', 'SubCategory updated successfully');
+        res.redirect('/subcategory/view-subcategory');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Failed to update subcategory');
+        res.redirect('/subcategory/view-subcategory');
+    }
+};
+
+
+/* ================= DELETE SUBCATEGORY ================= */
+const deleteSubcategory = async (req, res) => {
+    try {
+        const subId = req.params.id;
+        const deletedSub = await subcategoryModel.findByIdAndDelete(subId);
+
+        if (!deletedSub) {
+            req.flash('error', 'SubCategory not found');
+            return res.redirect('/subcategory/view-subcategory');
+        }
+
+        req.flash('success', 'SubCategory deleted successfully');
+        res.redirect('/subcategory/view-subcategory');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Failed to delete subcategory');
+        res.redirect('/subcategory/view-subcategory');
+    }
+};
+
 
 module.exports = {
-    addsubcategoryPage,
-    addsubcategory,
-    viewsubcategory,
-    editsubcategoryPage,
-    updatesubcategory,
-    deletesubcategory
-}
+    viewSubcategory,
+    addSubcategoryPage,
+    addSubcategory,
+    editSubcategoryPage,
+    updateSubcategory,
+    deleteSubcategory
+};

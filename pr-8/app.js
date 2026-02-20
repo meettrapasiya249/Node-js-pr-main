@@ -1,11 +1,18 @@
 const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
+const mongoose = require('mongoose');
 
 const app = express()
 const port = 8000;
 
 require('./config/dbconnection')
+
+// ================= MODEL REGISTRATION (FIX FOR MissingSchemaError) =================
+// In lines ko hatana mat, ye populate ke liye zaroori hain
+require('./model/category.model');
+require('./model/subcategory.model');
+require('./model/extracategory.model');
 
 // ================= VIEW ENGINE =================
 app.set('view engine','ejs')
@@ -110,6 +117,8 @@ app.use('/',require('./routes/index.routes'))
 app.use('/admin',require('./routes/admin.routes'))
 app.use('/category', require('./routes/category.routes'))
 app.use('/subcategory', require('./routes/subcategory.routes'))
+app.use('/extracategory', require('./routes/extracategory.routes'))
+app.use('/product', require('./routes/product.routes'))
 
 // ================= SERVER =================
 app.listen(port,()=>{

@@ -1,54 +1,109 @@
-<%- include('../header') %>
+    <%- include('../header') %>
 
-<div class="page-wrapper">
-    <div class="container-fluid">
+    <style>
+        .page-wrapper {
+            background-color: #f4f7fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;  
+            align-items: center;      
+            padding: 40px;
+            padding-right: 150px;
+        }
 
-        <div class="card">
-            <div class="card-header">
-                <h4>Add SubCategory</h4>
-                <a href="/subcategory/view-subcategory" class="btn btn-secondary btn-sm">
-                    ← Back
-                </a>
-            </div>
+        .custom-container {
+            width: 100%;
+            max-width: 500px;  
+            margin: 0 auto;
+        }
 
-            <div class="card-body">
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
 
-                <% if (messages.error && messages.error.length > 0) { %>
-                    <div class="alert alert-danger">
-                        <%= messages.error[0] %>
+        .card-header {
+            background: #fff;
+            padding: 20px 25px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; 
+        } 
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-select, .form-control {
+            width: 100% !important;  
+            height: 48px !important;  
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0 15px;
+            display: block;
+        } 
+        .btn-create {
+            background-color: #7c4dff;
+            color: white;
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: 0.3s;
+        } 
+        .btn-create:hover {
+            background-color: #6366f1;
+            transform: translateY(-2px);
+        }
+    </style> 
+
+        <div class="page-wrapper">
+            <div class="custom-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0" style="font-weight: 700; color: #313d51;">Add SubCategory</h4>
+                        <a href="/subcategory/view-subcategory" style="text-decoration: none; color: #a0aec0; font-size: 0.9rem;">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div> 
+                    <div class="card-body p-4">
+                        <form action="/subcategory/add-subcategory" method="POST" enctype="multipart/form-data"> 
+                            <div class="form-group">
+                                <label class="form-label">Select Parent Category</label>
+                                <select name="categoryId" class="form-select" required>
+                                    <option value="" disabled selected>Choose Category...</option>
+                                    <% categories.forEach(cat => { %>
+                                        <option value="<%= cat._id %>">
+                                            <%= cat.categoryName %>
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label class="form-label">SubCategory Name</label>
+                                <input type="text" name="subcategoryName" class="form-control" 
+                                    placeholder="Enter subcategory name" required>
+                            </div>
+                            <button type="submit" class="btn btn-create">
+                                Create SubCategory
+                            </button> 
+                        </form>
                     </div>
-                <% } %>
-
-                <% if (messages.success && messages.success.length > 0) { %>
-                    <div class="alert alert-success">
-                        <%= messages.success[0] %>
-                    </div>
-                <% } %>
-
-                <form action="/subcategory/add-subcategory" method="POST" enctype="multipart/form-data">
-                    
-                    <div class="form-group mb-3">
-                        <label>SubCategory Name</label>
-                        <input type="text" name="subcategoryName" 
-                               placeholder="Enter SubCategory Name" 
-                               class="form-control" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label>SubCategory Image</label>
-                        <input type="file" name="profileImg" class="form-control">
-                    </div>
-
-                    <button type="submit" class="btn btn-success">
-                        Save SubCategory
-                    </button>
-
-                </form>
-
+                </div>
+                <%- include('../footer') %>
             </div>
         </div>
-
-    </div>
-</div>
-
-<%- include('../footer') %>

@@ -1,29 +1,25 @@
-const express = require('express')
-const routes = express.Router()
+    const express = require('express')
+    const routes = express.Router()
 
-const upload = require('../middalwear/imageUpload')
+    const upload = require('../middalwear/imageUpload')
 
-const {
-    addcategoryPage,
-    addcategory,
-    viewCategory,
-    editCategoryPage,
-    updateCategory,
-    deleteCategory
-} = require('../controller/category.controller')
+    const {
+        addcategoryPage,
+        addcategory,
+        viewCategory,
+        editCategoryPage,
+        updateCategory,
+        deleteCategory
+    } = require('../controller/category.controller')
 
-/* ADD */
-routes.get('/add-category', addcategoryPage)
-routes.post('/add-category', upload.single('profileImg'), addcategory)
+    routes.get('/add-category', addcategoryPage)
+    routes.post('/add-category', upload.single('profileImg'), addcategory)
 
-/* VIEW */
-routes.get('/view-category', viewCategory)
+    routes.get('/view-category', viewCategory)
 
-/* EDIT */
-routes.get('/edit-category/:id', editCategoryPage)
-routes.post('/update-category/:id', upload.single('profileImg'), updateCategory)
+    routes.get('/edit-category/:id', editCategoryPage)
+    routes.post('/update-category/:id', upload.single('profileImg'), updateCategory)
 
-/* DELETE */
-routes.get('/delete-category/:id', deleteCategory)
+    routes.get('/delete-category/:id', deleteCategory)
 
-module.exports = routes
+    module.exports = routes

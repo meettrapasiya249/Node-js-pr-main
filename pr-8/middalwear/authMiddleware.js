@@ -2,7 +2,8 @@ const isLoggedIn = (req, res, next) => {
     if (req.session && req.session.adminId) {
         next()
     } else {
-        res.redirect('/admin/login')
+        const nextUrl = encodeURIComponent(req.originalUrl || '/')
+        res.redirect('/admin/login?next=' + nextUrl)
     }
 }
 

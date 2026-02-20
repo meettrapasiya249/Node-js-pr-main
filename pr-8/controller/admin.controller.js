@@ -2,7 +2,8 @@ const adminModel = require('../model/admin.model')
 
 /* ================= LOGIN ================= */
 const loginPage = (req, res) => {
-    res.render('admin/login')
+    const queryNext = req.query.next || ''
+    res.render('admin/login', { queryNext })
 }
 
 const login = async (req, res) => {
@@ -31,7 +32,9 @@ const login = async (req, res) => {
         req.session.email = admin.email
 
         req.flash('success', 'Login successful')
-        res.redirect('/admin/view-admin')
+        // Prefer redirect to requested page (next), fallback to admin dashboard
+        const redirectTo = req.body.next || req.query.next || '/admin/view-admin'
+        res.redirect(redirectTo)
 
     } catch (error) {
         console.error(error)
