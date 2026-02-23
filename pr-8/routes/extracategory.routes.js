@@ -8,6 +8,7 @@ const {
     viewextracategory,
     deleteextracategory,
     getSubcategories,
+    getBySubcategory,
     editextracategoryPage,
     updateextracategory   // ✅ Added
 } = require('../controller/extracategory.controller');
@@ -25,5 +26,6 @@ routes.post('/update-extracategory/:id', upload.single('profileImg'), updateextr
 routes.get('/delete-extracategory/:id', deleteextracategory);
 
 routes.get('/get-subcategories/:id', getSubcategories);
+routes.get('/get-by-subcategory/:id', getBySubcategory);
 
 module.exports = routes;

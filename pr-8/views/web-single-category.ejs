@@ -1,0 +1,236 @@
+    
+    <%- include('header') %> 
+        <div class="container py-5 mt-3">
+        <% if (category) { %>
+            <div class="card mb-4">
+                <div class="web-single-grid">
+                    <% if (category.profileImg) { %>
+                        <div class="left">
+                            <div class="category-hero">
+                                                                              <img src="/uploads/<%= category.profileImg %>" class="category-hero-img" alt="<%= category.categoryName %>">
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="left no-image"></div>
+                    <% } %>
+                    <div class="right">
+                        <div class="card-body">
+                            <h2><%= category.categoryName %></h2>
+                            <p class="text-muted">Category ID: <%= category._id %></p>
+                            <hr>
+                            <h4>SubCategories</h4>
+                            <% if (subcategories && subcategories.length) { %>
+                                <div class="subcategories-grid">
+                                    <% subcategories.forEach((sc) => { %>
+                                        <div class="subcard">
+                                            <h5><%= sc.subcategoryName %></h5>
+                                            <div class="meta">Added: <%= sc.date ? sc.date : '—' %></div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted">No subcategories</p>
+                            <% } %>
+                            <hr>
+                            <h4>Extra Categories</h4>
+                            <% if (extracategories && extracategories.length) { %>
+                                <div class="extracats">
+                                    <% extracategories.forEach((ex) => { %>
+                                        <div class="extracat-item">
+                                            <span class="extracat-badge"><%= ex.extracategoryName %></span>
+                                            <div class="extracat-sub">Sub: <%= ex.subcategoryId && ex.subcategoryId.subcategoryName ? ex.subcategoryId.subcategoryName : 'N/A' %></div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted">No extra categories</p>
+                            <% } %> 
+                            <div class="mt-4">
+                                <a href="/web" class="back-link">← Back to Web</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="alert alert-danger">Category not found</div>
+        <% } %>
+    </div>
+    <style>
+    :root{
+        --primary: #0066ff;
+        --primary-dark: #0052cc;
+        --muted: #6c757d;
+        --card-bg: #ffffff;
+        --soft: #f8f9fa;
+        --accent: #ffd84d;
+    }
+
+    .container {
+        max-width: 1100px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 28px rgba(25,35,45,0.06);
+    }
+
+    .web-single-grid {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .web-single-grid .left {
+        flex: 0 0 48%;
+        min-width: 240px;
+    }
+
+    .web-single-grid .right {
+        flex: 1;
+    }
+
+    .category-hero {
+        width: 100%;
+        min-height: 420px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        overflow:hidden;
+        background:var(--soft);
+    }
+
+    .category-hero-img {
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        transition: transform .6s ease;
+    }
+
+    .category-hero:hover .category-hero-img {
+        transform: scale(1.03);
+    }
+
+    .card-body {
+        padding: 28px;
+        background: var(--card-bg);
+    }
+
+    h2 {
+        font-size: 30px;
+        margin-bottom: 6px;
+        color: #121417;
+    }
+
+    .text-muted {
+        color: var(--muted);
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #eef2f6;
+        margin: 20px 0;
+    }
+
+    .subcategories-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 12px;
+    }
+
+    .subcard {
+        background: var(--soft);
+        padding: 14px;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary);
+    }
+
+    .subcard h5 {
+        margin: 0;
+        font-size: 16px;
+        color: var(--primary);
+    }
+
+    .subcard .meta {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 8px;
+    }
+
+    .extracats {
+        display:flex;
+        flex-wrap:wrap;
+        gap:12px;
+        margin-top:12px;
+    }
+
+    .extracat-item {
+        display:inline-flex;
+        flex-direction:column;
+        align-items:center;
+        gap:6px;
+    }
+
+    .extracat-badge {
+        background: #fff8e6;
+        border: 1px solid #ffecb5;
+        color: #8a5b00;
+        padding:8px 14px;
+        border-radius:20px;
+        font-weight:700;
+        box-shadow: 0 2px 6px rgba(34,34,34,0.03);
+    }
+
+    .extracat-sub {
+        font-size:12px;
+        color:var(--muted);
+    }
+
+    .back-link{
+        color:var(--primary);
+        text-decoration:underline;
+        font-weight:600;
+    }
+
+    .back-link:hover{
+        color:var(--primary-dark);
+    }
+    
+    @media (max-width: 992px) {
+        .subcategories-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .category-hero {
+            min-height: 300px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .web-single-grid {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .subcategories-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .category-hero {
+            min-height: 220px;
+        }
+
+        .card-body {
+            padding: 18px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+    }
+    </style>    
+    <%- include('footer') %>
+  

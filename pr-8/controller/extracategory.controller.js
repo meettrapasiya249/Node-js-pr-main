@@ -55,6 +55,16 @@ const getSubcategories = async (req, res) => {
     }
 };
 
+// AJAX: GET EXTRACATEGORIES BY SUBCATEGORY
+const getBySubcategory = async (req, res) => {
+    try {
+        const extracategories = await extracategoryModel.find({ subcategoryId: req.params.id });
+        res.json(extracategories);
+    } catch (error) {
+        res.status(500).json({ error: 'Server Error' });
+    }
+};
+
 // 4. CREATE EXTRACATEGORY
 const addextracategory = async (req, res) => {
     try {
@@ -135,6 +145,7 @@ module.exports = {
     viewextracategory,
     deleteextracategory,
     getSubcategories,
+    getBySubcategory,
     editextracategoryPage,
     updateextracategory    
 };

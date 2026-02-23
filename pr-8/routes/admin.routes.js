@@ -18,6 +18,7 @@ const {
     changePassword,
     viewProfile
 } = require('../controller/admin.controller')
+const { createToken } = require('../utils/webTokenStore')
 
 /* ===== AUTH ===== */
 routes.get('/login', loginPage)
@@ -46,5 +47,16 @@ routes.post('/change-password', isLoggedIn, changePassword)
 
 /* ===== VIEW PROFILE ===== */
 routes.get('/view-profile', isLoggedIn, viewProfile)
+
+/* ===== GO TO WEB (one-click, no re-login) ===== */
+routes.get('/goto-web', isLoggedIn, (req, res) => {
+    try {
+        const token = createToken(req.session.adminId, 60) // valid 60s
+        res.redirect(`/web?token=${token}`)
+    } catch (error) {
+        console.error('Failed to create web token', error)
+        res.redirect('/admin/view-profile')
+    }
+})
 
 module.exports = routes

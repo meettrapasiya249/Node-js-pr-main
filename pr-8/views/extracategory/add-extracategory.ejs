@@ -1,14 +1,13 @@
-    <%- include('../header') %>
+<%- include('../header') %>
 
     <style>
-
         :root {
             --primary: #10b981;
             --bg-color: #f1f5f9;
             --text-main: #1e293b;
             --border: #e2e8f0;
         }
-        
+
         .page-wrapper {
             background: var(--bg-color);
             min-height: 100vh;
@@ -28,7 +27,7 @@
             background: #fff;
             border-radius: 15px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .card-header {
@@ -38,18 +37,27 @@
             justify-content: space-between;
             align-items: center;
         }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
-        
-        .form-control, .form-select {
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-control,
+        .form-select {
             width: 100%;
             padding: 12px;
             border-radius: 10px;
             border: 1px solid var(--border);
             outline: none;
         }
-        
+    
         .btn-create {
             width: 100%;
             padding: 14px;
@@ -60,58 +68,79 @@
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
-        } 
-
-        .btn-create:hover  { 
-            background: #059669; 
         }
-    </style> 
-  
+     
+        .btn-create:hover {
+            background: #16d196;
+        }
+
+        .btn-view {
+            display: inline-block;
+            padding: 8px 14px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-view:hover {
+            background: #16d196;
+        }
+    </style>
+
     <div class="page-wrapper">
         <div class="custom-container">
             <div class="card">
                 <div class="card-header">
                     <h4 class="mb-0">Add ExtraCategory</h4>
-                    <a href="/extracategory/view-extracategory" class="btn-back">← Back</a>
-                </div> 
+                    <div>
+                        <a href="/extracategory/view-extracategory" class="btn-back">← Back</a>
+                        <a href="/extracategory/view-extracategory" class="btn-view">View ExtraCategories</a>
+                    </div>
+                </div>
                 <div class="card-body p-4">
-                    <form action="/extracategory/add-extracategory" method="POST" enctype="multipart/form-data"> 
+                    <form action="/extracategory/add-extracategory" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="form-label">Select Category</label>
                             <select name="categoryId" id="categorySelect" class="form-select" required>
                                 <option value="" disabled selected>Choose Category...</option>
-                                <% categories.forEach(cat => { %>
-                                    <option value="<%= cat._id %>"><%= cat.categoryName %></option>
-                                <% }) %>
-                            </select> 
-                        </div> 
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat._id %>">
+                                        <%= cat.categoryName %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label class="form-label">Select SubCategory</label>
                             <select name="subcategoryId" id="subcategorySelect" class="form-select" required disabled>
                                 <option value="" disabled selected>First select a category...</option>
                             </select>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label class="form-label">ExtraCategory Name</label>
-                            <input type="text" name="extracategoryName" class="form-control" placeholder="Enter name" required>
-                        </div> 
+                            <input type="text" name="extracategoryName" class="form-control" placeholder="Enter name"
+                                required>
+                        </div>
                         <button type="submit" class="btn btn-create">Create ExtraCategory</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div> 
-   
-    <script> 
+    </div>
+
+    <script>
         const categorySelect = document.getElementById('categorySelect');
-        const subcategorySelect = document.getElementById('subcategorySelect'); 
-        categorySelect.addEventListener('change', async function() {
-            const categoryId = this.value; 
+        const subcategorySelect = document.getElementById('subcategorySelect');
+        categorySelect.addEventListener('change', async function () {
+            const categoryId = this.value;
             subcategorySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
-            subcategorySelect.disabled = true; 
+            subcategorySelect.disabled = true;
             try {
                 const response = await fetch(`/extracategory/get-subcategories/${categoryId}`);
-                const subcategories = await response.json(); 
+                const subcategories = await response.json();
                 if (subcategories.length > 0) {
                     subcategorySelect.innerHTML = '<option value="" disabled selected>Choose SubCategory...</option>';
                     subcategories.forEach(sub => {
@@ -129,6 +158,6 @@
                 subcategorySelect.innerHTML = '<option value="" disabled selected>Error loading data</option>';
             }
         }); 
-    </script> 
- 
+    </script>
+
     <%- include('../footer') %>

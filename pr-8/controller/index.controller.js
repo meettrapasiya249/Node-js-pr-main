@@ -118,6 +118,27 @@ exports.viewWeb = async (req, res) => {
     }
 }
 
+// View a single category on a dedicated public page (shows child categories)
+exports.viewWebCategory = async (req, res) => {
+    try {
+        const { id } = req.params
+        const category = await categoryModel.findById(id)
+        if (!category) return res.status(404).render('web-single-category', { category: null, subcategories: [], extracategories: [] })
+
+        const subcategories = await subcategoryModel.find({ categoryId: category._id })
+        const extracategories = await extracategoryModel.find({ categoryId: category._id }).populate('subcategoryId', 'subcategoryName')
+
+        res.render('web-single-category', {
+            category,
+            subcategories,
+            extracategories
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).render('web-single-category', { category: null, subcategories: [], extracategories: [] })
+    }
+}
+
 // Delete product
 exports.deleteProduct = async(req,res)=>{
     try {
